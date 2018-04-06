@@ -28,7 +28,7 @@ __IO uint32_t ABS_Distance;     //绝对位置坐标，读取EERPOM的值 wt.edit 2018.02.0
 __IO uint8_t save_flag;
 extern __IO uint8_t NewOrigin_flag;
 extern __IO uint8_t PB8_flag;
-
+__IO uint8_t END_STOP_FLAG=0; //运行终点标志位
 
 /* 扩展变量 ------------------------------------------------------------------*/
 /* 私有函数原形 --------------------------------------------------------------*/
@@ -440,6 +440,7 @@ void STEPMOTOR_TIMx_IRQHandler(void)//定时器中断处理
           TIM_CCxChannelCmd(STEPMOTOR_TIMx, STEPMOTOR_TIM_CHANNEL_x, TIM_CCx_DISABLE);        
           __HAL_TIM_CLEAR_FLAG(&htimx_STEPMOTOR, STEPMOTOR_TIM_FLAG_CCx);
           DRV8825_OUTPUT_DISABLE(); 
+		   END_STOP_FLAG=1;
 		if(stop_flag==21)
 		{
 			stop_flag=100;

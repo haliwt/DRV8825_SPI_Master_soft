@@ -26,7 +26,7 @@ __IO uint8_t NewOrigin_flag=0;
 extern __IO uint8_t back_flag;
 extern __IO int32_t  LimPosi ; //正方向极限标志位  True:到达极限位  False:未到达极限位
 extern __IO int32_t  LimNega ; //负方向极限标志位
-
+extern __IO uint8_t END_STOP_FLAG;  //马达运行到终点，停止标志位
 
 /***************************************
 *
@@ -810,3 +810,72 @@ void STEPMOTOR_CCW_AxisMoveAbs( uint8_t ab_h,uint8_t ab_m,uint8_t ab_low, uint32
     
    }
 
+/****************************************************************
+ *
+ *函数名称：
+ *函数功能：存储马达到终点的位置，不清零，自动存取
+ *参数：无
+ *返回值：无
+ *
+****************************************************************/
+void Motor_Save_EndPosition(void)
+{
+     uint8_t flag,flag_w,i;
+     uint32_t a,b,c,d;
+   
+	
+	 a=step_count & 0xff;        //最高位
+     b=step_count >>8 & 0xff;   //第二位
+     c=step_count >>16 & 0xff;  //第三位
+     d=step_count >>24 & 0xff;  //第四位,最低位
+    
+	  flag=EEPROM_CheckOk();
+	  if(flag==1)
+	  {
+	      for ( i=0; i<4; i++ ) //填充缓冲 ,
+	      {
+	      I2c_Buf_Read[i]=0;      // 清空接收缓冲区
+	      I2c_Buf_Write[i]=0;
+	      
+	      }
+	      I2c_Buf_Write[0]=d;      
+	      I2c_Buf_Write[1]=c;
+	      I2c_Buf_Write[2]=b;
+	      I2c_Buf_Write[3]=a;
+	     
+      
+	     //将I2c_Buf_Write中顺序递增的数据写入EERPOM中 
+		 flag_w=EEPROM_WriteBytes(I2c_Buf_Write, 5, 4); //0x05 ~0x09
+		 HAL_Delay(200);
+		 #if 0
+		  EEPROM_ReadBytes(I2c_Buf_Read, 5, 4); 
+	   if(I2c_Buf_Read[0] == I2c_Buf_Write[0]) //
+		 {
+		    if(I2c_Buf_Read[1] == I2c_Buf_Write[1]) //
+				if(I2c_Buf_Read[2] == I2c_Buf_Write[2]) //
+				if(I2c_Buf_Read[3] == I2c_Buf_Write[3]) //
+					{
+						LED1_ON;
+						LED2_ON;
+						printf("eeprom is save OK \n");
+						//while(1);
+					}
+		 
+		 }
+		 else printf("eeprom is save error \n");
+		 #endif 
+	
+     //将EEPROM读出数据顺序保持到I2c_Buf_Read中  
+   	
+	     if(flag_w==1) //表示写入成功
+	        {
+	        LED1_ON;
+			HAL_Delay(10);
+			LED1_OFF;
+		    }
+		   else
+         printf("eeprom check error \n");				 
+		   	//while(1);
+	}	 
+
+}

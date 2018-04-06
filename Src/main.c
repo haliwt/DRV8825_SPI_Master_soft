@@ -44,6 +44,7 @@ uint8_t SPI_TX_FLAG=0;
 extern uint8_t test_aTxBuffer[7];
 uint8_t i2c_rx_data;
 static uint8_t j=0;
+extern __IO uint8_t END_STOP_FLAG;  //Âí´ïÔËÐÐµ½ÖÕµã£¬Í£Ö¹±êÖ¾Î
 /* À©Õ¹±äÁ¿ ------------------------------------------------------------------*/
 /* Ë½ÓÐº¯ÊýÔ­ÐÎ --------------------------------------------------------------*/
 /* º¯ÊýÌå --------------------------------------------------------------------*/
@@ -152,7 +153,11 @@ int main(void)
   
   while (1)
   {
-		
+		 if( END_STOP_FLAG==1)  //Âí´ïÔËÐÐµ½ÖÕµã£¬Í£Ö¹±êÖ¾Î»
+		{
+		   END_STOP_FLAG=0;
+		   Motor_Save_EndPosition();
+        }
 	     DRV8825_SLEEP_DISABLE() ; //¸ßµçÆ½¿ªÊ¼¹¤×÷
          if(KEY1_StateRead()==KEY_DOWN)
 		 {

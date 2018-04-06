@@ -579,17 +579,10 @@ ARM Macro Assembler    Page 9
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
 ork --depend=.\fengdi_pro\startup_stm32f103xe.d -o.\fengdi_pro\startup_stm32f10
-3xe.o -I"E:\DRV8825_HAL_RS232_TIM4_20180313_issus_6.0_optimize _SPI_Master\MDK-
-ARM\RTE" -IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0 -IC:\Keil_v5\ARM\CMSIS\
-Include --predefine="__EVAL SETA 1" --predefine="__MICROLIB SETA 1" --predefine
-="__UVISION_VERSION SETA 514" --predefine="STM32F10X_MD SETA 1" --list=startup_
-
-
-
-ARM Macro Assembler    Page 10 
-
-
-stm32f103xe.lst startup_stm32f103xe.s
+3xe.o -IE:\DRV8825_SPI_Master_soft\MDK-ARM\RTE -IC:\Keil_v5\ARM\PACK\Keil\STM32
+F1xx_DFP\2.2.0 -IC:\Keil_v5\ARM\CMSIS\Include --predefine="__MICROLIB SETA 1" -
+-predefine="__UVISION_VERSION SETA 514" --predefine="STM32F10X_MD SETA 1" --lis
+t=startup_stm32f103xe.lst startup_stm32f103xe.s
 
 
 
@@ -1461,4 +1454,4 @@ Symbol: __main
       At line 168 in file startup_stm32f103xe.s
 Comment: __main used once
 2 symbols
-423 symbols in table
+422 symbols in table
