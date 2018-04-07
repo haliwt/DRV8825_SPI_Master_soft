@@ -61,6 +61,7 @@
 ".\fengdi_pro\bsp_spi.o"
 ".\fengdi_pro\spi_comm.o"
 ".\fengdi_pro\bsp_i2c.o"
+".\fengdi_pro\a1_fun.o"
 ".\fengdi_pro\delay.o"
 ".\fengdi_pro\sys.o"
 --library_type=microlib --strict --scatter ".\FENGDI_PRO\FDI_PRO_500.sct"

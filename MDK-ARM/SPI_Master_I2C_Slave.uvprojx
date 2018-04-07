@@ -738,6 +738,11 @@
               <FileType>1</FileType>
               <FilePath>..\Src\bsp\I2C_SLAVE\bsp_I2C.c</FilePath>
             </File>
+            <File>
+              <FileName>a1_fun.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\bsp\A1_FUN\a1_fun.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

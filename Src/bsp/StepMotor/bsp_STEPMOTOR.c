@@ -156,7 +156,7 @@ void STEPMOTOR_TIMx_Init(void)
 void STEPMOTOR_AxisMoveRel( int32_t step, uint32_t speed)
 {  
    uint32_t tim_count;//获取定时器的计数值
-   uint16_t i=8000;
+   uint16_t i=6000;
   if(step < 0)      // 步数为负数
   {
 	      
@@ -176,6 +176,7 @@ void STEPMOTOR_AxisMoveRel( int32_t step, uint32_t speed)
 		  srd.rel_step  =step;
 		  //PulseNumbers=DRV8825_Read_CurrentPosition();
 		  PulseNumbers= - DRV8825_Read_CurrentPosition(); //wt.edit 18.03.08
+		 
 		}
 		else 
 		#endif	
@@ -199,8 +200,9 @@ void STEPMOTOR_AxisMoveRel( int32_t step, uint32_t speed)
 			//temp_value=step-DRV8825_Read_CurrentPosition();
 			//step_position=DRV8825_Read_CurrentPosition();
 			PulseNumbers=DRV8825_Read_CurrentPosition();
-			
 			srd.rel_step  = step;
+			
+			//step_position=DRV8825_Read_CurrentPosition();//wt.edit 2018.04.06
 			//Display_EEPROM_Value();
 		}
 		else
@@ -223,8 +225,8 @@ void STEPMOTOR_AxisMoveRel( int32_t step, uint32_t speed)
 			
 	do
 		{
-           // Toggle_Pulse=1200;
-			srd.min_delay=3000;
+            Toggle_Pulse=2000;
+			srd.min_delay=Toggle_Pulse;
 		    srd.run_state = RUN;
 
 			tim_count=__HAL_TIM_GET_COUNTER(&htimx_STEPMOTOR);
@@ -240,13 +242,14 @@ void STEPMOTOR_AxisMoveRel( int32_t step, uint32_t speed)
 	srd.min_delay=Toggle_Pulse;
     srd.run_state = RUN;
 	
-  }
+  
   tim_count=__HAL_TIM_GET_COUNTER(&htimx_STEPMOTOR);
 	//比较值，CCRx=tim_count+srd.min_delay
   __HAL_TIM_SET_COMPARE(&htimx_STEPMOTOR,STEPMOTOR_TIM_CHANNEL_x,tim_count+srd.min_delay); // 设置定时器比较值
 	HAL_TIM_OC_Start_IT(&htimx_STEPMOTOR,STEPMOTOR_TIM_CHANNEL_x);
 	TIM_CCxChannelCmd(STEPMOTOR_TIMx, STEPMOTOR_TIM_CHANNEL_x, TIM_CCx_ENABLE);// 使能定时器通道 
   DRV8825_OUTPUT_ENABLE();
+  }
 }
 
 /***********************************************************************
@@ -451,11 +454,10 @@ void STEPMOTOR_TIMx_IRQHandler(void)//定时器中断处理
 		 break;
 
         case RUN:
-		 // step_count++;
-		  if(stop_flag==10)
+		if(stop_flag==10)
 		  {
 		   stop_flag=20;
-		  // PulseNumbers=0;
+		   PulseNumbers=0;
 		  }
 		  else
 		  PulseNumbers++;

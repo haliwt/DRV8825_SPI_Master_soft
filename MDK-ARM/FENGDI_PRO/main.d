@@ -72,3 +72,4 @@
 .\fengdi_pro\main.o: ..\Inc\bsp\spi/bsp_spi.h
 .\fengdi_pro\main.o: ..\Inc\bsp\spi_comm/spi_comm.h
 .\fengdi_pro\main.o: ..\Inc\bsp\i2c_slave/bsp_I2C.h
+.\fengdi_pro\main.o: ..\Inc\bsp\a1_fun/a1_fun.h

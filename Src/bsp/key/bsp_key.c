@@ -49,12 +49,12 @@ void KEY_GPIO_Init(void)
     /* EXTI interrupt init*/
 	/* 配置KEY3 GPIO:STOP KEY */
   GPIO_InitStruct.Pin = KEY3_GPIO_PIN;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING ;//GPIO_MODE_IT_RISING_FALLING  ;  
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT ;//GPIO_MODE_IT_RISING_FALLING  ;  
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(KEY3_GPIO, &GPIO_InitStruct);  
   
-  HAL_NVIC_SetPriority(KEY3_EXTI_IRQn, 1, 0); //停止按键
-  HAL_NVIC_EnableIRQ(KEY3_EXTI_IRQn);
+ // HAL_NVIC_SetPriority(KEY3_EXTI_IRQn, 1, 0); //停止按键
+  //HAL_NVIC_EnableIRQ(KEY3_EXTI_IRQn);
 	
 	//HAL_NVIC_SetPriority(KEY2_EXTI_IRQn, 2, 1);
   //HAL_NVIC_EnableIRQ(KEY2_EXTI_IRQn);
@@ -149,7 +149,7 @@ KEYState_TypeDef KEY3_StateRead(void)
 }
 
 //中断服务函数
-#if 1
+#if  0
 void EXTI0_IRQHandler(void)
 {
  
@@ -163,7 +163,7 @@ void EXTI0_IRQHandler(void)
 *参数：中断按键的GPIO口，
 *
 ************************************************/
-#if 1  //wt.edit 
+#if 0  //wt.edit 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
             HAL_Delay(10);
@@ -176,8 +176,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
               				
             }
 		
-         
-						
  }
 
 #endif
