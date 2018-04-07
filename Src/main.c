@@ -99,8 +99,7 @@ int main(void)
 {
   uint8_t txbuf[100],Mode_Count=0;
   // uint8_t tranbuffer[]={0x88};
-   uint8_t DS18B20ID[8],i,temp,spi_order;//rxspidata;
-   float temperature;
+   uint8_t DS18B20ID[8],i;//rxspidata;
    
   /* ∏¥ŒªÀ˘”–Õ‚…Ë£¨≥ı ºªØFlashΩ”ø⁄∫ÕœµÕ≥µŒ¥∂® ±∆˜ */
   HAL_Init();
@@ -156,11 +155,7 @@ int main(void)
   
   while (1)
   {
-		 if( END_STOP_FLAG==1)  //ÁªàÁÇπÁªìÊùüÊ†áÂøó‰Ωç
-		{
-		   END_STOP_FLAG=0;
-		   Motor_Save_EndPosition();
-        }
+		
 	     DRV8825_SLEEP_DISABLE() ; //∏ﬂµÁ∆Ωø™ ºπ§◊˜
          if(KEY1_StateRead()==KEY_DOWN)
 		 {
@@ -208,6 +203,11 @@ int main(void)
 		{
             A1_CONTROL_A2_FUN();
 		}
+		if( END_STOP_FLAG==1)  //‘À––µΩ÷’µ„£¨Õ£÷π±Í÷æŒª°£
+		{
+		   END_STOP_FLAG=0;
+		   Motor_Save_EndPosition();
+        }
 		
 	}
 	
@@ -622,7 +622,7 @@ void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi)
     //__HAL_SPI_DISABLE(&hspi_SPI);
 
   //HAL_SPI_Receive_IT(&hspi_SPI,&aRxBuffer[i],7);
-	#if 0
+  #if 0
   HAL_SPI_Transmit(&hspi_SPI,&SPI_aTxBuffer[0],7,0XFFFF);
   {
    if(aRxBuffer[0]==0xa2)
