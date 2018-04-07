@@ -30,6 +30,8 @@ uint32_t DRV8825_Read_CurrentPosition(void);  //读取马达当前位置步数?
 
 
 void Display_EEPROM_Value(void);
+void A1_ReadEprom_Value(void);  //读取A1 的EEPROM 值
+
 void EEPROM_Clear_Buf(void);   //清楚eeprom 寄存器 清零。
 void MOTOR_Save_NewHomePosition(void);   //存储当前的位置，作为马达的坐标原点（当前坐标值）
 void Set_NewOrigin_Position(void);    //设置新的坐标原点
@@ -38,5 +40,6 @@ void PC_A2_DRV8825_ReadSpeed(uint8_t s_h,uint8_t s_l) ;//读取第二马达速度值
 void PC_A2_Pulse_EEPROM_Value(void); //实时显示第二马达的位置EEPROM be saved datat，脉冲值
 void A2_Pulse_RealTime_Value(void); //实时显示第二个马达脉冲数。
 void Motor_Save_EndPosition(void);
+
 #endif
 

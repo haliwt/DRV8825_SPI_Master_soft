@@ -48,6 +48,8 @@ uint8_t i2c_rx_data;
 static uint8_t j=0;
 extern __IO uint8_t END_STOP_FLAG;  //¬Ì¥Ô‘À––µΩ÷’µ„£¨Õ£÷π±Í÷æŒ
 __IO uint8_t A2_FLAG=0;
+__IO uint8_t A1_Read_FLAG=0; //A1 ËØªÂèñÂèÇÊï∞ÂÄº
+
 /* ¿©’π±‰¡ø ------------------------------------------------------------------*/
 /* ÀΩ”–∫Ø ˝‘≠–Œ --------------------------------------------------------------*/
 /* ∫Ø ˝ÃÂ --------------------------------------------------------------------*/
@@ -117,7 +119,7 @@ int main(void)
   HAL_TIM_Base_Start(&htimx_STEPMOTOR);
 
   // __HAL_UART_ENABLE_IT(&husartx, UART_IT_IDLE);  //wt.edit 11.07
-  memcpy(txbuf,"SPI_MASTER version6.0 \n",100);
+  memcpy(txbuf,"SPI_MASTER version6.01 2018-04-07 \n",100);
   HAL_UART_Transmit(&husartx,txbuf,strlen((char *)txbuf),1000);
   Brightness=LAMP_Read_BrightValue(); 
   GENERAL_TIMx_Init();
@@ -198,6 +200,11 @@ int main(void)
 		if(re_intrrupt_flag==1) 
 		{
            A1_FUN();
+		}
+		if(A1_Read_FLAG==1)
+		{
+            A1_Read_FLAG=0;
+			A1_ReadData_FUN();
 		}
 		if(A2_FLAG==1)
 		{
@@ -363,6 +370,7 @@ if(HAL_UART_Receive_IT(&husartx,aRxBuffer,7)==HAL_OK )
 							  break;
 			    }
 			} //end if(aRxBuffer[1]==0x00)
+		/*************************A1ËØªÂèñÈ©¨ËææÂèÇÊï∞ÂÄº********************************/
 		   if(aRxBuffer[1]==0x01)   
 		   {
 		     switch(aRxBuffer[2])
@@ -370,10 +378,18 @@ if(HAL_UART_Receive_IT(&husartx,aRxBuffer,7)==HAL_OK )
 				 case 0x03:   //∂¡»°¬Ì¥Ô µ ±Œª÷√¬ˆ≥Â ˝
 				    if(aRxBuffer[6]==0x0b)
 						{
-						   re_intrrupt_flag=1;
+						   A1_Read_FLAG=1;
 						   judge_data= 0x103;
 						  //Display_CurrentPosition();
 							__HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
+						}
+				  break; 
+				case 0xe0:   //ËØªÂèñA1 EEPROM ÂÄº
+				    if(aRxBuffer[6]==0x0b)
+						{
+						   A1_Read_FLAG=1;
+						   judge_data= 0x1e0;
+						   __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
 						}
 				  break; 
 				 case 0x04:      /* ∂¡»°LED µ∆¡¡∂»÷µ */
@@ -381,7 +397,7 @@ if(HAL_UART_Receive_IT(&husartx,aRxBuffer,7)==HAL_OK )
 						if(aRxBuffer[6]==0x0b)
 						{
 
-							re_intrrupt_flag=1;
+							A1_Read_FLAG=1;
 						   judge_data= 0x104;
 							
 						
@@ -394,7 +410,7 @@ if(HAL_UART_Receive_IT(&husartx,aRxBuffer,7)==HAL_OK )
 						if(aRxBuffer[6]==0x0b)
 						{
 
-							re_intrrupt_flag=1;
+							A1_Read_FLAG=1;
 						   judge_data= 0x101;
 							__HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
 						}
@@ -405,7 +421,7 @@ if(HAL_UART_Receive_IT(&husartx,aRxBuffer,7)==HAL_OK )
 						if(aRxBuffer[6]==0x0b)
 						{
 							
-						   re_intrrupt_flag=1;
+						   A1_Read_FLAG=1;
 						   judge_data= 0x102;
 						  
 							__HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23

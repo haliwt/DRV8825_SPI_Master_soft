@@ -395,21 +395,35 @@ uint32_t DRV8825_Read_CurrentPosition(void)
 ***********************************************************/
 void Display_EEPROM_Value(void)
 {
-       uint32_t temp1,temp2,temp3,temp4;
-	   uint8_t flag,i;
+    
+	   uint32_t real_value;
 	   uint8_t sendbuffer[6]={0xa1,0x03,00,00,00,0x0b};
-	   uint32_t value,real_value;
-	   
 	   real_value=step_count;
-      // send_realn=Decimal_TO_Hex(real_value);
-	
-	  
+      
 	   sendbuffer[4]=real_value & 0xff;
 	   sendbuffer[3]=real_value>>8 & 0xff;
 	   sendbuffer[2]=real_value>>16 & 0xff; 
-      // HAL_UART_Transmit(&husartx,sendbuffer,6,20);
+       
+	   printf("real position= %ld \n",real_value);
+       HAL_UART_Transmit(&husartx,sendbuffer,6,12);  
+		 
+		
+}
+/*********************************************************
+ *
+ * 函数功能：读取A1 EEPROM值
+ * 输入参数：无
+ * 返回参数无：
+ *
+***********************************************************/
+void A1_ReadEprom_Value(void)
+{
+       int32_t temp1,temp2,temp3,temp4;
+	   uint8_t flag,i;
+	   uint8_t sendbuffer[6]={0xa1,0x03,00,00,00,0x0b};
+	   uint32_t value;
 	   
-	    flag=EEPROM_CheckOk();
+	   flag=EEPROM_CheckOk();
 	   if(flag==1)
 		 {
     	  for(i=0;i<4;i++)
@@ -417,9 +431,13 @@ void Display_EEPROM_Value(void)
 		    I2c_Buf_Read[i]=0;
 		  }
 		  /*??EEPROM??????????????I2c_Buf_Read?? */ 
-       	 EEPROM_ReadBytes(I2c_Buf_Read, 5, 4);  //马达走的位置的数据，存储位置
+       	  EEPROM_ReadBytes(I2c_Buf_Read, 5, 4);  //马达走的位置的数据，存储位置
 		  HAL_Delay(200);
-		 
+
+          sendbuffer[4]=I2c_Buf_Read[3];
+	      sendbuffer[3]=I2c_Buf_Read[2];
+	      sendbuffer[2]=I2c_Buf_Read[1];
+		  
 		 temp1=Hex2oct_MSB(I2c_Buf_Read[0]);  
 	     temp2=Hex2oct_MD1(I2c_Buf_Read[1]);
 	     temp3=Hex2oct_MD2(I2c_Buf_Read[2]);
@@ -428,16 +446,12 @@ void Display_EEPROM_Value(void)
 		 
 		  
 		// temp=(I2c_Buf_Read[3]<<24)|(I2c_Buf_Read[2]<<16)|(I2c_Buf_Read[1]<<8)|(I2c_Buf_Read[0]);
-        // HAL_UART_Transmit(&husartx,I2c_Buf_Read,5,4);
-		// printf("--------------------------- \n");
-		// printf("temp current position= %ld \n",temp);
-		 printf("EEPROM position= %ld \n",value);
-		 printf("real position= %ld \n",real_value);
-         HAL_UART_Transmit(&husartx,sendbuffer,6,12);		  
-		 
-		 }
-}
+      
+	     printf("EEPROM position= %ld \n",value);
+         HAL_UART_Transmit(&husartx,sendbuffer,6,12);		
 
+      }
+  }
 /*********************************************************
  *
  * 函数名称：A2_Pulse_RealTime_Value

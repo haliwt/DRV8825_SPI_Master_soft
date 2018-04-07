@@ -35,7 +35,7 @@ extern uint8_t SPI_aTxBuffer[7];
 extern uint8_t I2C_RX_Buffer[3];  //I2C 接收到的数据
 extern uint8_t I2C_RX_SAVE_Buffer[3];
 extern __IO uint8_t A2_FLAG;
-
+extern __IO uint8_t A1_Read_FLAG;
 /*************************************************************
  *
  *函数名称：
@@ -48,19 +48,14 @@ extern __IO uint8_t A2_FLAG;
 void A1_FUN(void)
 {
   
-		uint8_t DS18B20ID[8],temp;//rxspidata;
-        float temperature;
+		
 		if(HAL_GPIO_ReadPin(GPIO_PB8,GPIO_PB8_PIN)==0)
 		{
 		  DRV8825_StopMove();
 		}
         switch(judge_data)
 		  {
-              if(HAL_GPIO_ReadPin(GPIO_PB8,GPIO_PB8_PIN)==0)//||(stop_key_flag==1))
-		      {
-		       PB8_flag=1;
-			   DRV8825_StopMove();
-		      }
+             
 			  case 0x02 :   //??????????????????λ?÷???
 				    re_intrrupt_flag=0;
 					PB8_flag=0;
@@ -168,6 +163,7 @@ void A1_FUN(void)
 			 case 0xa0 :    //???????????
 			 	    re_intrrupt_flag=0; 
 			 	    Set_NewOrigin_Position();
+			        __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
 					HAL_Delay(30);
 					LED2_OFF;
 					LED1_OFF;
@@ -232,45 +228,62 @@ void A1_FUN(void)
 					HAL_Delay(10);
 				break;
 
-            case 0x103 :   //??????  0x 1xx 
-				 re_intrrupt_flag=0; 
-				Display_EEPROM_Value();  //????????λ???????
-				break;
-			case 0x104 :
-				    re_intrrupt_flag=0; 
-				    temp= LAMP_Read_BrightValue(); //????????
-					printf("BRV = %d \n",temp);
-					LED2_OFF;
-					LED1_OFF;
-					HAL_Delay(20);
-					LED2_ON;
-					LED1_ON;
-					HAL_Delay(20);
-				break;
-			case 0x102 :
-				    re_intrrupt_flag=0; 
-				     temperature=DS18B20_GetTemp_MatchRom(DS18B20ID);
-					/* ?????? DS18B20 ???к????????? */
-					printf("????????к???????????%.1f\n",temperature);
-					/* 1s ?????????? */
-					HAL_Delay(1000);
-					printf("????????к???????????%.1f\n",temperature);
-					HAL_Delay(1000);
-					
-				break;
-			case 0x101:
-                re_intrrupt_flag=0; 
-				PC_DRV8825_ReadSpeed(); //??????????
-				break;
-	
-				
-			break;
-			default:re_intrrupt_flag=0;
+           default:re_intrrupt_flag=0;
 			   	     
 				
 		    }
 
 		
+
+}
+/**********************************************************************
+   *
+   *函数名称：
+   *函数功能：马达A1 读取数据函数
+   *输入函数：无
+   *返回值：无
+   *
+************************************************************************/
+void A1_ReadData_FUN(void)
+{
+         uint8_t DS18B20ID[8],temp;//rxspidata;
+        float temperature;
+
+		  switch(judge_data)
+          	{
+
+			   case 0x103 :   //??????  0x 1xx 
+					 A1_Read_FLAG=0;
+					Display_EEPROM_Value();  //????????λ???????
+					__HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
+					break;
+				case 0x1e0:
+					A1_Read_FLAG=0;
+					A1_ReadEprom_Value();
+				   __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
+					break;
+				case 0x104 :
+					    A1_Read_FLAG=0;
+					    temp= LAMP_Read_BrightValue(); //????????
+						printf("BRV = %d \n",temp);
+						__HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
+					
+					break;
+				case 0x102 :
+					    A1_Read_FLAG=0;
+					     temperature=DS18B20_GetTemp_MatchRom(DS18B20ID);
+						/* ?????? DS18B20 ???к????????? */
+						printf("????????к???????????%.1f\n",temperature);
+						__HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
+						/* 1s ?????????? */
+						break;
+				case 0x101:
+	                A1_Read_FLAG=0; 
+					PC_DRV8825_ReadSpeed(); //??????????
+					__HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
+					break;
+				default:A1_Read_FLAG=0;
+          	}
 
 }
 
