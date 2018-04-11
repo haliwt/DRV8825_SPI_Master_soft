@@ -19,7 +19,7 @@ uint8_t SPI_TX_flag=0;
 void SPI_COMM_Function(uint8_t spi_order,uint8_t spi_tx_hig,uint8_t spi_tx_mid,uint8_t spi_tx_low)
 {
      
-	  uint8_t i=0;
+	//  uint8_t i=0;
 	//for(i=0;i<2;i++)
 	{
 	 

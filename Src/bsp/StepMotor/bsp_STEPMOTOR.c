@@ -274,6 +274,14 @@ void STEPMOTOR_AxisMoveAbs( int32_t targert_step, uint32_t speed)
 	{
 		dir = 0;
 	}
+	else if(NewOrigin_flag==1)
+	{
+        NewOrigin_flag=0;
+		rel_step=0;
+		step_count=0;
+		step_position=0;
+		PulseNumbers=0;
+	}
 	else
 		dir = -1;
 	//STEPMOTOR_AxisMoveRel(dir*rel_step,speed); 

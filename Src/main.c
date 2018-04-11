@@ -49,7 +49,7 @@ static uint8_t j=0;
 extern __IO uint8_t END_STOP_FLAG;  //Âí´ïÔËĞĞµ½ÖÕµã£¬Í£Ö¹±êÖ¾Î
 __IO uint8_t A2_FLAG=0;
 __IO uint8_t A1_Read_FLAG=0; //A1 è¯»å–å‚æ•°å€¼
-
+__IO uint8_t A1_Read_Temp=0;
 /* À©Õ¹±äÁ¿ ------------------------------------------------------------------*/
 /* Ë½ÓĞº¯ÊıÔ­ĞÎ --------------------------------------------------------------*/
 /* º¯ÊıÌå --------------------------------------------------------------------*/
@@ -100,9 +100,9 @@ void SystemClock_Config(void)
 int main(void)
 {
   uint8_t txbuf[100],Mode_Count=0;
-  // uint8_t tranbuffer[]={0x88};
-   uint8_t DS18B20ID[8],i;//rxspidata;
-   
+  uint8_t i, DS18B20ID[8];
+  float temperature;
+	
   /* ¸´Î»ËùÓĞÍâÉè£¬³õÊ¼»¯Flash½Ó¿ÚºÍÏµÍ³µÎ´ğ¶¨Ê±Æ÷ */
   HAL_Init();
   /* ÅäÖÃÏµÍ³Ê±ÖÓ */
@@ -119,7 +119,7 @@ int main(void)
   HAL_TIM_Base_Start(&htimx_STEPMOTOR);
 
   // __HAL_UART_ENABLE_IT(&husartx, UART_IT_IDLE);  //wt.edit 11.07
-  memcpy(txbuf,"SPI_MASTER version6.01 2018-04-07 \n",100);
+  memcpy(txbuf,"SPI_MASTER version6.03 2018-04-11 \n",100);
   HAL_UART_Transmit(&husartx,txbuf,strlen((char *)txbuf),1000);
   Brightness=LAMP_Read_BrightValue(); 
   GENERAL_TIMx_Init();
@@ -131,12 +131,11 @@ int main(void)
   //Brightness=LAMP_Read_BrightValue(); 
   GENERAL_TIMx_Init();
   HAL_TIM_PWM_Start(&htimx,TIM_CHANNEL_4);  
-   printf("DS18B20ÎÂ¶È´«¸ĞÆ÷ĞÅÏ¢¶ÁÈ¡\n");
+  printf("DS18B20ÎÂ¶È´«¸ĞÆ÷ĞÅÏ¢¶ÁÈ¡\n");
   while(DS18B20_Init())	
   {
 		printf("DS18B20ÎÂ¶È´«¸ĞÆ÷²»´æÔÚ\n");    
-        HAL_Delay(1000);
-	    break;
+    HAL_Delay(1000);
   }
   printf("¼ì²âµ½DS18B20ÎÂ¶È´«¸ĞÆ÷£¬²¢³õÊ¼»¯³É¹¦\n");
   DS18B20_ReadId(DS18B20ID);
@@ -191,7 +190,7 @@ int main(void)
 			}
 		}
 		
-		if(HAL_GPIO_ReadPin(GPIO_PB8,GPIO_PB8_PIN)==0)//||(stop_key_flag==1))
+		if((HAL_GPIO_ReadPin(GPIO_PB8,GPIO_PB8_PIN)==0)||(KEY3_StateRead()==KEY_DOWN))//||(stop_key_flag==1))
 		{
 		    PB8_flag=1;
 			DRV8825_StopMove();
@@ -215,6 +214,15 @@ int main(void)
 		   END_STOP_FLAG=0;
 		   Motor_Save_EndPosition();
         }
+		if(A1_Read_Temp==1)
+		{
+		    A1_Read_Temp=0;
+			temperature=DS18B20_GetTemp_MatchRom(DS18B20ID);
+           /* ´òÓ¡Í¨¹ı DS18B20 ĞòÁĞºÅ»ñÈ¡µÄÎÂ¶ÈÖµ */
+          printf("»ñÈ¡¸ÃĞòÁĞºÅÆ÷¼şµÄÎÂ¶È£º%.1f\n",temperature);
+          /* 1s ¶ÁÈ¡Ò»´ÎÎÂ¶ÈÖµ */
+         HAL_Delay(1000);
+		}
 		
 	}
 	
@@ -222,12 +230,6 @@ int main(void)
 /*****************************end main()***************************************************/
 /***********************************************************************************/
 /**************************************************************************************/
-
-
-
-
-
-
 /*******************************************************************************
   * º¯Êı¹¦ÄÜ: ´®¿Ú½ÓÊÕÍê³É»Øµ÷º¯Êı
   * ÊäÈë²ÎÊı: ÎŞ
@@ -416,15 +418,12 @@ if(HAL_UART_Receive_IT(&husartx,aRxBuffer,7)==HAL_OK )
 						}
 					 }
 					 break;
-					 case 0x02:    //if(aRxBuffer[2]==0x02)  /*¶ÁÈ¡»·¾³ÎÂ¶ÈÖµ*/
+					 case 0x02:     /*¶ÁÈ¡»·¾³ÎÂ¶ÈÖµ*/
 					 {
 						if(aRxBuffer[6]==0x0b)
 						{
-							
-						   A1_Read_FLAG=1;
-						   judge_data= 0x102;
-						  
-							__HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
+							A1_Read_Temp=1;
+						   __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
 						}
 					 }
                      break;
