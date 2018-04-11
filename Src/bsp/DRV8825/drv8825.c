@@ -713,8 +713,7 @@ uint8_t MOTOR_Read_NewHomeFlag(void)
 void Set_NewOrigin_Position(void)
 {
     uint8_t flag,flag_w,i;
-   // uint32_t a,b,c,d;
-	NewOrigin_flag=1;
+	NewOrigin_flag=1;   //wt.edit 2018.04.11 add this is item
     PulseNumbers=0;
     step_count=0;
 	step_position=0;  //wt.edit 18.03.07
@@ -735,12 +734,22 @@ void Set_NewOrigin_Position(void)
 	  }	 
 		 if(flag_w==1) //表示写入成功
 	    {
-	    LED1_ON;
+	        LED1_ON;
 			HAL_Delay(10);
 			LED1_OFF;
 		   }
 		   else 
-		   	while(1);
+		   	  LED1_ON;
+			  LED2_ON;
+			  HAL_Delay(500);
+			  LED1_OFF;
+			  LED2_OFF;
+			  HAL_Delay(500);
+			  LED1_ON;
+			  LED2_ON;
+			   HAL_Delay(500);
+			  LED1_OFF;
+			  LED2_OFF;
 
 
 }

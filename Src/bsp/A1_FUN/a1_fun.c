@@ -151,7 +151,7 @@ void A1_FUN(void)
 				 PB8_flag=0;
 				 // DRV8825_SLEEP_DISABLE() ; //???????????
 				 // HAL_Delay(10);
-				  home_position = Read_Origin_Position();
+				 home_position = Read_Origin_Position();
 				 STEPMOTOR_AxisMoveAbs(0*SPR,Toggle_Pulse);
 				 if(HAL_GPIO_ReadPin(GPIO_PB8,GPIO_PB8_PIN)==0)
 				 {
@@ -246,41 +246,31 @@ void A1_FUN(void)
 ************************************************************************/
 void A1_ReadData_FUN(void)
 {
-         uint8_t DS18B20ID[8],temp;//rxspidata;
-        float temperature;
-
-		  switch(judge_data)
+        uint8_t temp;//rxspidata;
+        switch(judge_data)
           	{
 
 			   case 0x103 :   //??????  0x 1xx 
 					 A1_Read_FLAG=0;
 					Display_EEPROM_Value();  //????????λ???????
-					__HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
+					//__HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
 					break;
 				case 0x1e0:
 					A1_Read_FLAG=0;
 					A1_ReadEprom_Value();
-				   __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
+				   //__HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
 					break;
 				case 0x104 :
 					    A1_Read_FLAG=0;
 					    temp= LAMP_Read_BrightValue(); //????????
 						printf("BRV = %d \n",temp);
-						__HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
+						//__HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
 					
 					break;
-				case 0x102 :
-					    A1_Read_FLAG=0;
-					     temperature=DS18B20_GetTemp_MatchRom(DS18B20ID);
-						/* ?????? DS18B20 ???к????????? */
-						printf("????????к???????????%.1f\n",temperature);
-						__HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
-						/* 1s ?????????? */
-						break;
 				case 0x101:
 	                A1_Read_FLAG=0; 
 					PC_DRV8825_ReadSpeed(); //??????????
-					__HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
+					//__HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
 					break;
 				default:A1_Read_FLAG=0;
           	}
@@ -310,7 +300,7 @@ void A1_CONTROL_A2_FUN(void)
 			         SPI_aTxBuffer[1]=0x00;
 			         spi_order=0x02;
 					 SPI_COMM_Function(spi_order,repcdata[0],repcdata[1],repcdata[2]);
-			         __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
+			        // __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
 			
  
 			  break;
@@ -321,7 +311,7 @@ void A1_CONTROL_A2_FUN(void)
 						 SPI_aTxBuffer[1]=0x00;
 						 spi_order=0x82;
 						 SPI_COMM_Function(spi_order,repcdata[0],repcdata[1],repcdata[2]);
-						  __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
+						 // __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
 					  }
 				    break;
 			  case 0x233 :
@@ -330,7 +320,7 @@ void A1_CONTROL_A2_FUN(void)
                         SPI_aTxBuffer[1]=0x00;						  
 						spi_order=0x33;
 						SPI_COMM_Function(spi_order,repcdata[0],repcdata[1],repcdata[2]);
-						 __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
+						// __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
 					  }
 			        
 					  break;
@@ -342,7 +332,7 @@ void A1_CONTROL_A2_FUN(void)
                    SPI_aTxBuffer[1]=0x00;					   
                    spi_order=0xb0;
 				   SPI_COMM_Function(spi_order,repcdata[0],repcdata[1],repcdata[2]);
-					__HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
+					//__HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
 			        }
 				   
 			  
@@ -359,28 +349,28 @@ void A1_CONTROL_A2_FUN(void)
 			         SPI_aTxBuffer[1]=0x00;
 			         spi_order=0x90;
 			         SPI_COMM_Function(spi_order,repcdata[0],repcdata[1],repcdata[2]);
-			         __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23	
+			        // __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23	
 				break;
 		   case 0x2ff :  //???λ????
                      A2_FLAG=0;
 		             SPI_aTxBuffer[1]=0x00;
 		             spi_order=0xff;
 				     SPI_COMM_Function(spi_order,repcdata[0],repcdata[1],repcdata[2]);
-		             __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23	
+		             //__HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23	
 				  break;
 			case 0x2c0 :  //LED ???????,?????
                      A2_FLAG=0; 
                      SPI_aTxBuffer[1]=0x00;			
 			         spi_order=0xc0;
 				     SPI_COMM_Function(spi_order,repcdata[0],repcdata[1],repcdata[2]);
-			          __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
+			        //  __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
 				break;
 			case 0x2d0 :
                     A2_FLAG=0; 
 			        SPI_aTxBuffer[1]=0x00;
 					 spi_order=0xd0;
 				     SPI_COMM_Function(spi_order,repcdata[0],repcdata[1],repcdata[2]);
-			         __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
+			        // __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
 				break;
 			case 0x00 :
 					A2_FLAG=0; 
@@ -389,7 +379,7 @@ void A1_CONTROL_A2_FUN(void)
 					 SPI_COMM_Function(spi_order,repcdata[0],repcdata[1],repcdata[2]);
 			         SPI_COMM_Function(spi_order,repcdata[0],repcdata[1],repcdata[2]);
 			         SPI_COMM_Function(spi_order,repcdata[0],repcdata[1],repcdata[2]);
-			         __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
+			        // __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
 					  break;
 			case 0x2ee:    //A1 ?? A2 ???????
 				A2_FLAG=0;
@@ -415,7 +405,7 @@ void A1_CONTROL_A2_FUN(void)
 					LED2_OFF;
 					LED1_OFF;
 					HAL_Delay(200);
-					 __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23	
+					// __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23	
 				break;
 		   /*********************************************************************************/
           /***************************控制第二个马达***************************************/
@@ -426,7 +416,7 @@ void A1_CONTROL_A2_FUN(void)
 			      SPI_COMM_Function(spi_order,repcdata[0],repcdata[1],repcdata[2]);
 			      HAL_Delay(100);
 			      A2_Pulse_RealTime_Value();
-			       __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23	
+			      // __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23	
 				break;
 			case 0x2104 :   //???LED???????
 				    A2_FLAG=0;
@@ -436,14 +426,14 @@ void A1_CONTROL_A2_FUN(void)
 			         HAL_Delay(100);
 			         temp= A2_LAMP_Read_BrightValue();
 			         printf("A2_BRV = %d \n",temp);
-			         __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23	
+			        // __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23	
 				break;
 			case 0x2102 :
 				    A2_FLAG=0;
 			       	SPI_aTxBuffer[1]=0x01;
 			        spi_order=0x02;
 			        SPI_COMM_Function(spi_order,repcdata[0],repcdata[1],repcdata[2]);
-					 __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
+					// __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
 				break;
 			case 0x2101: // Read the second motor of speed value A2.
 				A2_FLAG=0; 
@@ -452,7 +442,7 @@ void A1_CONTROL_A2_FUN(void)
 			    SPI_COMM_Function(spi_order,repcdata[0],repcdata[1],repcdata[2]);
 			    HAL_Delay(10);
 			    PC_A2_DRV8825_ReadSpeed(I2C_RX_SAVE_Buffer[1],I2C_RX_SAVE_Buffer[2]); //??????????
-			    __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
+			    //__HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
 			    break;
 			case 0x21e0:  //????????????????
 				 A2_FLAG=0; 
@@ -461,7 +451,7 @@ void A1_CONTROL_A2_FUN(void)
 			     SPI_COMM_Function(spi_order,repcdata[0],repcdata[1],repcdata[2]);
 			      HAL_Delay(200);
 			      PC_A2_Pulse_EEPROM_Value();
-				 __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
+				// __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
 			break;
 			default :A2_FLAG=0;
 		 }
