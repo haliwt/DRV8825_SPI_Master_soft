@@ -99,12 +99,8 @@ void STEPMOTOR_TIMx_Init(void);
 void STEPMOTOR_TIMx_Init(void);
 void STEPMOTOR_AxisMoveRel(int32_t step, uint32_t speed);
 void STEPMOTOR_AxisMoveAbs(int32_t targert_step, uint32_t speed);
-void STEPMOTOR_AxisHome(uint16_t speed);  //自动搜索原点功能
-void STEPMOTOR_AxisSetHome(uint8_t home_phigh,uint8_t home_mid,uint8_t home_plow,uint16_t speed); //wt.edit 2017.12.25
 void STEPMOTOR_PC_AxisMoveAbs( uint8_t abs_high,uint8_t abs_mid,uint8_t abs_low, uint32_t speed);
-//void STEPMOTOR_CCW_AxisMoveAbs( uint8_t abs_high,uint8_t abs_mid,uint8_t abs_low, uint32_t speed); //绝对位置移动函数-逆时针
-//void STEPMOTOR_CW_AxisMoveAbs( uint8_t abs_high,uint8_t abs_mid,uint8_t abs_low, uint32_t speed); //绝对位置移动函数-顺时针
-//void STEPMOTOR_AxisHome(void);
+
 
 
 #endif	/* __STEPMOTOR_TIM_H__ */
