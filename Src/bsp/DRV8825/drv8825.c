@@ -101,14 +101,26 @@ uint16_t DRV8825_ReadSpeed(void)
 *
 *函数功能：相对位置移动，以当前的位置计算。
 *参数: 输入的16进制，2个字节?---脉冲数驱动
-*返回值：无，背离马达位置方向移动
+*返回值：无，背离马达位置方向移动     0x82---往前移动
 *
 ***************************************/
 void DRV8825_CCW_AxisMoveRel(uint8_t ccir_high,uint8_t ccir_mid,uint8_t ccir_low,uint16_t speed)
 {
    uint32_t all_cir;
+   uint32_t temp4;
 	 all_cir=ccir_high<<16|ccir_mid<<8|ccir_low;
-	// STEPMOTOR_AxisMoveRel(1*all_cir*SPR,speed); 
+	// STEPMOTOR_AxisMoveRel(1*all_cir*SPR,speed);
+     if(stop_flag==0)    //第一次开机，执行此语句  wt.edit 2018.04.13
+	{
+	  
+	  stop_flag=35;
+	  temp4=DRV8825_Read_CurrentPosition();   //负数--远离马达方向移动
+	  step_count=temp4;
+	  PulseNumbers=temp4;
+	  step_position=temp4;
+	
+	}
+       
 	 STEPMOTOR_AxisMoveRel(1*all_cir,speed);   
 
 }
@@ -117,14 +129,25 @@ void DRV8825_CCW_AxisMoveRel(uint8_t ccir_high,uint8_t ccir_mid,uint8_t ccir_low
 *
 *函数功能：相对位置移动，以当前的位置计算。
 *参数: 输入的16进制，3个字节，以脉冲数驱动
-*返回值：无,向马达位置方向移动
+*返回值：无,向马达位置方向移动------order:0x02
 *
 ***************************************/
 void DRV8825_CW_AxisMoveRel(uint8_t cir_high,uint8_t cir_mid,uint8_t cir_low,uint16_t speed)
 {
      int32_t all_cir;
+     uint32_t temp4;
 	 all_cir=cir_high<<16|cir_mid<<8|cir_low;
 	 //STEPMOTOR_AxisMoveRel(-1*all_cir*SPR,speed); 
+    if(stop_flag==0)    //第一次开机，执行此语句  wt.edit 2018.04.13
+	{
+	  
+	  stop_flag=35;
+	  temp4=DRV8825_Read_CurrentPosition();   //负数--远离马达方向移动
+	  step_count=temp4;
+	  PulseNumbers=temp4;
+	  step_position=temp4;
+	
+	}
 	 STEPMOTOR_AxisMoveRel(-1*all_cir,speed); 
 
 }
@@ -395,18 +418,57 @@ uint32_t DRV8825_Read_CurrentPosition(void)
 ***********************************************************/
 void Display_EEPROM_Value(void)
 {
-    
-	   uint32_t real_value;
+       int32_t temp1,temp2,temp3,temp4;
+	   uint8_t flag,i;
+	   uint32_t real_value,step_numbers;
 	   uint8_t sendbuffer[6]={0xa1,0x03,00,00,00,0x0b};
 	   real_value=step_count;
       
-	   sendbuffer[4]=real_value & 0xff;
-	   sendbuffer[3]=real_value>>8 & 0xff;
-	   sendbuffer[2]=real_value>>16 & 0xff; 
        
-	   printf("real position= %ld \n",real_value);
-       HAL_UART_Transmit(&husartx,sendbuffer,6,12);  
+       if(stop_flag==0)
+       {
+       
+         flag=EEPROM_CheckOk();
+	     if(flag==1)
+		 {
+    	  for(i=0;i<4;i++)
+		  {
+		    I2c_Buf_Read[i]=0;
+		  }
+		  /*??EEPROM??????????????I2c_Buf_Read?? */ 
+       	  EEPROM_ReadBytes(I2c_Buf_Read, 5, 4);  //马达走的位置的数据，存储位置
+		  HAL_Delay(200);
+
+          sendbuffer[4]=I2c_Buf_Read[3];
+	      sendbuffer[3]=I2c_Buf_Read[2];
+	      sendbuffer[2]=I2c_Buf_Read[1];
+		  
+		 temp1=Hex2oct_MSB(I2c_Buf_Read[0]);  
+	     temp2=Hex2oct_MD1(I2c_Buf_Read[1]);
+	     temp3=Hex2oct_MD2(I2c_Buf_Read[2]);
+	     temp4=Hex2oct_LSB(I2c_Buf_Read[3]);
+		 real_value=temp1+temp2+temp3+temp4;
 		 
+		  
+		// temp=(I2c_Buf_Read[3]<<24)|(I2c_Buf_Read[2]<<16)|(I2c_Buf_Read[1]<<8)|(I2c_Buf_Read[0]);
+      
+	      printf("real position= %ld \n",real_value);
+         HAL_UART_Transmit(&husartx,sendbuffer,6,12);		
+       
+         }
+        }
+       else 
+       {
+           sendbuffer[4]=real_value & 0xff;
+           sendbuffer[3]=real_value>>8 & 0xff;
+           sendbuffer[2]=real_value>>16 & 0xff;
+           
+           step_numbers=step_position;   
+           
+           printf("real position= %ld \n",real_value);
+           printf("step_numbers= %d \n",step_numbers);
+           HAL_UART_Transmit(&husartx,sendbuffer,6,12);  
+       } 
 		
 }
 /*********************************************************

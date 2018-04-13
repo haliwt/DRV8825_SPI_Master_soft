@@ -58,3 +58,5 @@
 .\fengdi_pro\bsp_ds18b20.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_usb.h
 .\fengdi_pro\bsp_ds18b20.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd_ex.h
 .\fengdi_pro\bsp_ds18b20.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_hcd.h
+.\fengdi_pro\bsp_ds18b20.o: ..\Inc\bsp\usart/bsp_usartx.h
+.\fengdi_pro\bsp_ds18b20.o: ..\Inc\bsp\hextodec/hextodec.h

@@ -58,3 +58,4 @@
 .\fengdi_pro\hextodec.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_usb.h
 .\fengdi_pro\hextodec.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd_ex.h
 .\fengdi_pro\hextodec.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_hcd.h
+.\fengdi_pro\hextodec.o: ..\Inc\bsp\usart/bsp_usartx.h

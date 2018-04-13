@@ -264,7 +264,8 @@ void STEPMOTOR_AxisMoveAbs( int32_t targert_step, uint32_t speed)
 {
 	 int32_t rel_step = 0;
 	 int8_t dir = -1;
-	 rel_step = step_position - targert_step ; 	//获取当前位置和目标位置之间的步数值
+	// rel_step = step_position - targert_step ; 	//获取当前位置和目标位置之间的步数值
+    rel_step = step_count - targert_step ;   //wt.edit 2018.04.13
 	if(stop_flag==0)
 	{
 	  stop_flag=21;
@@ -340,7 +341,7 @@ void STEPMOTOR_PC_AxisMoveAbs( uint8_t abs_high,uint8_t abs_mid,uint8_t abs_low,
 	if(stop_flag==0)    //第一次开机，执行此语句
 	{
 	  
-		stop_flag=5;
+	  stop_flag=5;
 	  temp4=DRV8825_Read_CurrentPosition();
 	  step_count=temp4;
 	  rel_step=step_position+step_count-ABS_Distance;    //背离马达方向移动，选此项
@@ -467,6 +468,13 @@ void STEPMOTOR_TIMx_IRQHandler(void)//定时器中断处理
 		   stop_flag=20;
 		   PulseNumbers=0;
 		  }
+		else if(NewOrigin_flag==1)
+		{
+          NewOrigin_flag=0;
+		  PulseNumbers=0;
+		   step_count=0;
+		   step_position=0;
+		}
 		  else
 		  PulseNumbers++;
           if(srd.dir==CW)
