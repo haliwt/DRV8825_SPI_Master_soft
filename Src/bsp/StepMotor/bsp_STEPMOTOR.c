@@ -29,6 +29,7 @@ __IO uint8_t save_flag;
 extern __IO uint8_t NewOrigin_flag;
 extern __IO uint8_t PB8_flag;
 __IO uint8_t END_STOP_FLAG=0; //运行终点标志位
+__IO uint8_t END_A1_READ_A2_RealTime_FLAG=0; //马达1 读取马达2 实时数据停止标志位
 
 /* 扩展变量 ------------------------------------------------------------------*/
 /* 私有函数原形 --------------------------------------------------------------*/
@@ -423,6 +424,7 @@ void STEPMOTOR_TIMx_IRQHandler(void)//定时器中断处理
           __HAL_TIM_CLEAR_FLAG(&htimx_STEPMOTOR, STEPMOTOR_TIM_FLAG_CCx);
           DRV8825_OUTPUT_DISABLE(); 
 		   END_STOP_FLAG=1;
+		   //wt.edit 2018.04.17
 		if(stop_flag==21)
 		{
 			stop_flag=100;

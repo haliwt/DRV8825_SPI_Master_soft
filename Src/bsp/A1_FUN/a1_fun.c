@@ -26,6 +26,9 @@ extern __IO uint8_t re_intrrupt_flag; //从上位机，接收信号标志位，进入中断标志位
 extern __IO uint16_t judge_data;    //接收到数据的功能码数据。
 extern __IO uint8_t PB8_flag;
 extern uint8_t SPI_TX_FLAG;
+extern __IO uint16_t A1_Read_A2_Judge; //马达1读取马达2 判读值指令
+extern __IO uint8_t  END_A1_READ_A2_RealTime_FLAG; //马达1 读取马达2 停止标志位
+
 /* 私有变量 ------------------------------------------------------------------*/
 extern uint8_t aRxBuffer[256];                      // 接收数据 
 extern uint8_t aTxBuffer[SENDBUFF_SIZE];       // 串口DMA发送缓冲区
@@ -228,7 +231,7 @@ void A1_CONTROL_A2_FUN(void)
 		 switch(judge_data)
            	{
 			case 0x202 :   //??????????????????λ?÷???
-				   
+				     END_A1_READ_A2_RealTime_FLAG=0;
 			         SPI_aTxBuffer[1]=0x00;
 			         spi_order=0x02;
 					 SPI_COMM_Function(spi_order,repcdata[0],repcdata[1],repcdata[2]);
@@ -239,7 +242,7 @@ void A1_CONTROL_A2_FUN(void)
 					
 			  case 0x282 :   //????????????????
 					  {
-						
+						 END_A1_READ_A2_RealTime_FLAG=0;
 						 SPI_aTxBuffer[1]=0x00;
 						 spi_order=0x82;
 						 SPI_COMM_Function(spi_order,repcdata[0],repcdata[1],repcdata[2]);
@@ -248,7 +251,7 @@ void A1_CONTROL_A2_FUN(void)
 				    break;
 			  case 0x233 :
 					  {
-						
+						END_A1_READ_A2_RealTime_FLAG=0;
                         SPI_aTxBuffer[1]=0x00;						  
 						spi_order=0x33;
 						SPI_COMM_Function(spi_order,repcdata[0],repcdata[1],repcdata[2]);
@@ -260,6 +263,7 @@ void A1_CONTROL_A2_FUN(void)
 			  case 0x2b0 :
 			       {
 			      
+                   END_A1_READ_A2_RealTime_FLAG=0;
 				   SPI_aTxBuffer[1]=0x00;
                    SPI_aTxBuffer[1]=0x00;					   
                    spi_order=0xb0;
@@ -271,35 +275,35 @@ void A1_CONTROL_A2_FUN(void)
 			 break;
 
 			 case 0x2a0 :    //???????????
-			 	  
+			 	    END_A1_READ_A2_RealTime_FLAG=0;
 			        SPI_aTxBuffer[1]=0x00;
                     spi_order=0xa0;
 				    SPI_COMM_Function(spi_order,repcdata[0],repcdata[1],repcdata[2]);
                      __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
 			 	break;
 			case 0x290 :     //
-                   
+                     END_A1_READ_A2_RealTime_FLAG=0;
 			         SPI_aTxBuffer[1]=0x00;
 			         spi_order=0x90;
 			         SPI_COMM_Function(spi_order,repcdata[0],repcdata[1],repcdata[2]);
 			         __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23	
 				break;
 		   case 0x2ff :  //???λ????
-                     
+                     END_A1_READ_A2_RealTime_FLAG=0;
 		             SPI_aTxBuffer[1]=0x00;
 		             spi_order=0xff;
 				     SPI_COMM_Function(spi_order,repcdata[0],repcdata[1],repcdata[2]);
 		             __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23	
 				  break;
 			case 0x2c0 :  //LED ???????,?????
-                    
+                     END_A1_READ_A2_RealTime_FLAG=0;
                      SPI_aTxBuffer[1]=0x00;			
 			         spi_order=0xc0;
 				     SPI_COMM_Function(spi_order,repcdata[0],repcdata[1],repcdata[2]);
 			          __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
 				break;
 			case 0x2d0 :
-                    
+                    END_A1_READ_A2_RealTime_FLAG=0;
 			        SPI_aTxBuffer[1]=0x00;
 					 spi_order=0xd0;
 				     SPI_COMM_Function(spi_order,repcdata[0],repcdata[1],repcdata[2]);
@@ -340,17 +344,37 @@ void A1_CONTROL_A2_FUN(void)
 					HAL_Delay(200);
 					 __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23	
 				break;
-		   /*********************************************************************************/
-          /***************************控制第二个马达***************************************/
-            case 0x2103 :   //?????? ?????λ??????? 0x 1xx A2
-				 
-                  SPI_aTxBuffer[1]=0x01;
+		 	}
+}
+
+/***********************************************
+   *
+   *函数名称：
+   *函数功能：马达1读取第二马达数据
+   *输入参数：无
+   *返回值：无
+   *
+************************************************/
+void A1_ReadData_A2_Fun(void)	
+{
+           uint8_t spi_order,temp;
+           switch(A1_Read_A2_Judge)
+           {
+            
+			case 0x2103 :   //?????? ?????λ??????? 0x 1xx A2
+				  SPI_aTxBuffer[1]=0x01;
 			      spi_order=0x03;
 			      SPI_COMM_Function(spi_order,repcdata[0],repcdata[1],repcdata[2]);
-			      HAL_Delay(100);
+			      HAL_Delay(50);
+				  if(END_A1_READ_A2_RealTime_FLAG==1)
+				  {
+                    printf("A1 read A2 real time over \n");
+			      }
+			      else
 			      A2_Pulse_RealTime_Value();
 			       __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23	
 				break;
+			
 			case 0x2104 :   //???LED???????
 				   
 			        SPI_aTxBuffer[1]=0x01;
