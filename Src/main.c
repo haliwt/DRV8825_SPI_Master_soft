@@ -125,7 +125,7 @@ int main(void)
   HAL_TIM_Base_Start(&htimx_STEPMOTOR);
 
   // __HAL_UART_ENABLE_IT(&husartx, UART_IT_IDLE);  //wt.edit 11.07
-  memcpy(txbuf,"SPI_MASTER version 7.0 2018-04-22 \n",100);
+  memcpy(txbuf,"SPI_MASTER version 7.01 2018-04-23 \n",100);
   HAL_UART_Transmit(&husartx,txbuf,strlen((char *)txbuf),1000);
   Brightness=LAMP_Read_BrightValue(); 
   GENERAL_TIMx_Init();
@@ -451,7 +451,7 @@ if(HAL_UART_Receive_IT(&husartx,aRxBuffer,7)==HAL_OK )
 	    }
   }// end if(aRxBuffer[0]==0xa1)
 
-  /*****************ÊéßÂà∂Á¨¨‰∫å‰∏™È©¨ËææÊåá‰ª§******************************/
+  /*****************øÿ÷∆¬Ì¥ÔA2******************************/
    if(aRxBuffer[0]==0xA2)
    {
     if(aRxBuffer[1]==0x00)
@@ -572,7 +572,7 @@ if(HAL_UART_Receive_IT(&husartx,aRxBuffer,7)==HAL_OK )
 						
 			    }
 			} //end if(aRxBuffer[1]==0x00)
-		   /*****************************È©¨Ëææ1ËØªÂèñÈ©¨Ëææ2********************************/
+		   /*****************************∂¡»°µ⁄∂˛∏ˆ¬Ì¥ÔA2 ˝æ›*******************************/
 		   if(aRxBuffer[1]==0x01)   
 		   {
 		     switch(aRxBuffer[2])
@@ -580,7 +580,8 @@ if(HAL_UART_Receive_IT(&husartx,aRxBuffer,7)==HAL_OK )
 				 case 0x03:   //∂¡»°¬Ì¥Ô µ ±Œª÷√¬ˆ≥Â ˝
 				    if(aRxBuffer[6]==0x0b)
 						{
-						    A1_ReadData_A2_Flag=1;
+						    HAL_Delay(100);
+							A1_ReadData_A2_Flag=1;
 						    A1_Read_A2_Judge= 0x2103;
 							__HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
 						}
@@ -600,7 +601,7 @@ if(HAL_UART_Receive_IT(&husartx,aRxBuffer,7)==HAL_OK )
 					 {
 						if(aRxBuffer[6]==0x0b)
 						{
-                             A1_ReadData_A2_Flag=1;
+                           A1_ReadData_A2_Flag=1;
 						   A1_Read_A2_Judge= 0x2101;
 							__HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
 						}
@@ -611,7 +612,7 @@ if(HAL_UART_Receive_IT(&husartx,aRxBuffer,7)==HAL_OK )
 						if(aRxBuffer[6]==0x0b)
 						{
 							
-						      A1_ReadData_A2_Flag=1;
+						    A1_ReadData_A2_Flag=1;
 						   A1_Read_A2_Judge= 0x2102;
 						  
 							__HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23

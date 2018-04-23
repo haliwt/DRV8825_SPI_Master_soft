@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\FENGDI_PRO\FDI_PRO_500.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\FENGDI_PRO\FDI_PRO_500.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Sun Apr 22 21:45:07 2018
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Mon Apr 23 15:01:57 2018
 <BR><P>
 <H3>Maximum Stack Usage =        376 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -478,12 +478,12 @@ Global Symbols
 
 <P><STRONG><a name="[11b]"></a>_ll_sshift_r</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, llsshr.o(.text), UNUSED)
 
-<P><STRONG><a name="[5c]"></a>A1_CONTROL_A2_FUN</STRONG> (Thumb, 582 bytes, Stack size 24 bytes, a1_fun.o(i.A1_CONTROL_A2_FUN))
+<P><STRONG><a name="[5c]"></a>A1_CONTROL_A2_FUN</STRONG> (Thumb, 656 bytes, Stack size 24 bytes, a1_fun.o(i.A1_CONTROL_A2_FUN))
 <BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = A1_CONTROL_A2_FUN &rArr; DRV8825_StopMove &rArr; Display_EEPROM_Value &rArr; EEPROM_CheckOk &rArr; I2C_CheckDevice &rArr; I2C_InitGPIO &rArr; HAL_GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DRV8825_StopMove
 <LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_COMM_Function
 </UL>
@@ -493,9 +493,9 @@ Global Symbols
 <P><STRONG><a name="[62]"></a>A1_FUN</STRONG> (Thumb, 694 bytes, Stack size 40 bytes, a1_fun.o(i.A1_FUN))
 <BR><BR>[Stack]<UL><LI>Max Depth = 208<LI>Call Chain = A1_FUN &rArr; STEPMOTOR_PC_AxisMoveAbs &rArr; STEPMOTOR_AxisMoveRel &rArr; DRV8825_Read_CurrentPosition &rArr; EEPROM_CheckOk &rArr; I2C_CheckDevice &rArr; I2C_InitGPIO &rArr; HAL_GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_PWM_Start
 <LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;STEPMOTOR_AxisMoveAbs
 <LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GENERAL_TIMx_Init
@@ -511,16 +511,16 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[6d]"></a>A1_ReadData_A2_Fun</STRONG> (Thumb, 214 bytes, Stack size 24 bytes, a1_fun.o(i.A1_ReadData_A2_Fun))
+<P><STRONG><a name="[6d]"></a>A1_ReadData_A2_Fun</STRONG> (Thumb, 210 bytes, Stack size 24 bytes, a1_fun.o(i.A1_ReadData_A2_Fun))
 <BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = A1_ReadData_A2_Fun &rArr; SPI_COMM_Function &rArr; HAL_SPI_Transmit &rArr; SPI_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
+<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_COMM_Function
-<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;A2_LAMP_Read_BrightValue
+<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;A2_LAMP_Read_BrightValue
 <LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PC_A2_Pulse_EEPROM_Value
 <LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PC_A2_DRV8825_ReadSpeed
 <LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;A2_Pulse_RealTime_Value
-<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -532,7 +532,7 @@ Global Symbols
 <LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PC_DRV8825_ReadSpeed
 <LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Display_EEPROM_Value
 <LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;A1_ReadEprom_Value
-<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -540,7 +540,7 @@ Global Symbols
 <P><STRONG><a name="[75]"></a>A1_ReadEprom_Value</STRONG> (Thumb, 128 bytes, Stack size 32 bytes, drv8825.o(i.A1_ReadEprom_Value))
 <BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = A1_ReadEprom_Value &rArr; EEPROM_CheckOk &rArr; I2C_CheckDevice &rArr; I2C_InitGPIO &rArr; HAL_GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
+<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
 <LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Hex2oct_MSB
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Hex2oct_MD2
@@ -548,16 +548,16 @@ Global Symbols
 <LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Hex2oct_LSB
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EEPROM_ReadBytes
 <LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EEPROM_CheckOk
-<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;A1_ReadData_FUN
 </UL>
 
-<P><STRONG><a name="[71]"></a>A2_LAMP_Read_BrightValue</STRONG> (Thumb, 42 bytes, Stack size 16 bytes, bsp_lamp.o(i.A2_LAMP_Read_BrightValue))
+<P><STRONG><a name="[70]"></a>A2_LAMP_Read_BrightValue</STRONG> (Thumb, 42 bytes, Stack size 16 bytes, bsp_lamp.o(i.A2_LAMP_Read_BrightValue))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = A2_LAMP_Read_BrightValue &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
-<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;A1_ReadData_A2_Fun
 </UL>
@@ -569,7 +569,7 @@ Global Symbols
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Hex2oct_MD2
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Hex2oct_MD1
 <LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Hex2oct_LSB
-<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;A1_ReadData_A2_Fun
 </UL>
@@ -611,7 +611,7 @@ Global Symbols
 <P><STRONG><a name="[7f]"></a>DRV8825_Read_CurrentPosition</STRONG> (Thumb, 72 bytes, Stack size 24 bytes, drv8825.o(i.DRV8825_Read_CurrentPosition))
 <BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = DRV8825_Read_CurrentPosition &rArr; EEPROM_CheckOk &rArr; I2C_CheckDevice &rArr; I2C_InitGPIO &rArr; HAL_GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
+<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Hex2oct_MSB
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Hex2oct_MD2
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Hex2oct_MD1
@@ -629,11 +629,11 @@ Global Symbols
 <P><STRONG><a name="[82]"></a>DRV8825_Save_CurrentPosition</STRONG> (Thumb, 134 bytes, Stack size 24 bytes, drv8825.o(i.DRV8825_Save_CurrentPosition))
 <BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = DRV8825_Save_CurrentPosition &rArr; EEPROM_CheckOk &rArr; I2C_CheckDevice &rArr; I2C_InitGPIO &rArr; HAL_GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
+<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EEPROM_WriteBytes
 <LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EEPROM_CheckOk
-<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DRV8825_StopMove
 <LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Set_NewOrigin_Position
@@ -642,8 +642,8 @@ Global Symbols
 <P><STRONG><a name="[68]"></a>DRV8825_SetSpeed</STRONG> (Thumb, 158 bytes, Stack size 24 bytes, drv8825.o(i.DRV8825_SetSpeed))
 <BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = DRV8825_SetSpeed &rArr; EEPROM_CheckOk &rArr; I2C_CheckDevice &rArr; I2C_InitGPIO &rArr; HAL_GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
+<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EEPROM_WriteBytes
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EEPROM_ReadBytes
 <LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EEPROM_CheckOk
@@ -654,7 +654,7 @@ Global Symbols
 <P><STRONG><a name="[5e]"></a>DRV8825_StopMove</STRONG> (Thumb, 72 bytes, Stack size 8 bytes, drv8825.o(i.DRV8825_StopMove))
 <BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = DRV8825_StopMove &rArr; Display_EEPROM_Value &rArr; EEPROM_CheckOk &rArr; I2C_CheckDevice &rArr; I2C_InitGPIO &rArr; HAL_GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_CCxChannelCmd
 <LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_OC_Stop_IT
 <LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Display_EEPROM_Value
@@ -682,7 +682,7 @@ Global Symbols
 <P><STRONG><a name="[8b]"></a>DS18B20_Init</STRONG> (Thumb, 46 bytes, Stack size 8 bytes, bsp_ds18b20.o(i.DS18B20_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = DS18B20_Init &rArr; DS18B20_Presence &rArr; DS18B20_Mode_IPU &rArr; HAL_GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS18B20_Rst
 <LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS18B20_Presence
 <LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS18B20_Mode_Out_PP
@@ -712,7 +712,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fmul
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2iz
-<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -721,7 +721,7 @@ Global Symbols
 <P><STRONG><a name="[74]"></a>Display_EEPROM_Value</STRONG> (Thumb, 186 bytes, Stack size 32 bytes, drv8825.o(i.Display_EEPROM_Value))
 <BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = Display_EEPROM_Value &rArr; EEPROM_CheckOk &rArr; I2C_CheckDevice &rArr; I2C_InitGPIO &rArr; HAL_GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
+<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
 <LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Hex2oct_MSB
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Hex2oct_MD2
@@ -729,7 +729,7 @@ Global Symbols
 <LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Hex2oct_LSB
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EEPROM_ReadBytes
 <LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EEPROM_CheckOk
-<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DRV8825_StopMove
 <LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;A1_ReadData_FUN
@@ -758,8 +758,8 @@ Global Symbols
 <P><STRONG><a name="[6c]"></a>EEPROM_Clear_Buf</STRONG> (Thumb, 94 bytes, Stack size 16 bytes, drv8825.o(i.EEPROM_Clear_Buf))
 <BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = EEPROM_Clear_Buf &rArr; EEPROM_CheckOk &rArr; I2C_CheckDevice &rArr; I2C_InitGPIO &rArr; HAL_GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
+<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EEPROM_WriteBytes
 <LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EEPROM_CheckOk
 </UL>
@@ -816,7 +816,7 @@ Global Symbols
 <LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[61]"></a>HAL_Delay</STRONG> (Thumb, 22 bytes, Stack size 16 bytes, stm32f1xx_hal.o(i.HAL_Delay))
+<P><STRONG><a name="[60]"></a>HAL_Delay</STRONG> (Thumb, 22 bytes, Stack size 16 bytes, stm32f1xx_hal.o(i.HAL_Delay))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = HAL_Delay
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
@@ -830,6 +830,7 @@ Global Symbols
 <LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;A1_FUN
 <LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;A1_CONTROL_A2_FUN
 <LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_RxCpltCallback
 <LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_COMM_Function
 <LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LAMP_Save_BrightValue
 <LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Set_NewOrigin_Position
@@ -870,7 +871,7 @@ Global Symbols
 <LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_ReadByte
 </UL>
 
-<P><STRONG><a name="[60]"></a>HAL_GPIO_WritePin</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, stm32f1xx_hal_gpio.o(i.HAL_GPIO_WritePin))
+<P><STRONG><a name="[61]"></a>HAL_GPIO_WritePin</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, stm32f1xx_hal_gpio.o(i.HAL_GPIO_WritePin))
 <BR><BR>[Called By]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;STEPMOTOR_AxisMoveRel
 <LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Motor_Save_EndPosition
 <LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_GPIO_Init
@@ -902,7 +903,7 @@ Global Symbols
 <P><STRONG><a name="[a5]"></a>HAL_GetTick</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, stm32f1xx_hal.o(i.HAL_GetTick))
 <BR><BR>[Called By]<UL><LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_OscConfig
 <LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_ClockConfig
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_WaitOnFlagUntilTimeout
 <LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_WaitOnFlagUntilTimeout
 <LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_WaitOnFlagUntilTimeout
@@ -980,7 +981,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = HAL_I2C_SlaveRxCpltCallback &rArr; HAL_I2C_Slave_Receive_IT &rArr; I2C_WaitOnFlagUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_I2C_Slave_Receive_IT
-<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Slave_STOPF
 </UL>
@@ -1104,7 +1105,7 @@ Global Symbols
 <P><STRONG><a name="[c7]"></a>HAL_RCC_OscConfig</STRONG> (Thumb, 1704 bytes, Stack size 40 bytes, stm32f1xx_hal_rcc.o(i.HAL_RCC_OscConfig))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = HAL_RCC_OscConfig &rArr; HAL_Delay
 </UL>
-<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
+<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
 </UL>
 <BR>[Called By]<UL><LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
@@ -1133,7 +1134,7 @@ Global Symbols
 <P><STRONG><a name="[cb]"></a>HAL_SPI_MspInit</STRONG> (Thumb, 150 bytes, Stack size 32 bytes, bsp_spi.o(i.HAL_SPI_MspInit))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = HAL_SPI_MspInit &rArr; HAL_GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_Init
 <LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_EnableIRQ
 <LI><a href="#[b8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_SetPriority
@@ -1334,10 +1335,11 @@ Global Symbols
 <LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_RxCpltCallback
 </UL>
 
-<P><STRONG><a name="[e7]"></a>HAL_UART_RxCpltCallback</STRONG> (Thumb, 1112 bytes, Stack size 24 bytes, main.o(i.HAL_UART_RxCpltCallback))
+<P><STRONG><a name="[e7]"></a>HAL_UART_RxCpltCallback</STRONG> (Thumb, 1118 bytes, Stack size 24 bytes, main.o(i.HAL_UART_RxCpltCallback))
 <BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = HAL_UART_RxCpltCallback &rArr; DRV8825_StopMove &rArr; Display_EEPROM_Value &rArr; EEPROM_CheckOk &rArr; I2C_CheckDevice &rArr; I2C_InitGPIO &rArr; HAL_GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Receive_IT
 <LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;KEY3_StateRead
 <LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DRV8825_StopMove
@@ -1354,7 +1356,7 @@ Global Symbols
 <LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LAMP_Read_BrightValue
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Dec_To_Hex
 <LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;A2_LAMP_Read_BrightValue
+<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;A2_LAMP_Read_BrightValue
 <LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PC_DRV8825_ReadSpeed
 <LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PC_A2_Pulse_EEPROM_Value
 <LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PC_A2_DRV8825_ReadSpeed
@@ -1432,7 +1434,7 @@ Global Symbols
 <P><STRONG><a name="[9e]"></a>I2C_Ack</STRONG> (Thumb, 60 bytes, Stack size 8 bytes, bsp_eeprom.o(i.I2C_Ack))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = I2C_Ack
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Delay
 </UL>
 <BR>[Called By]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EEPROM_ReadBytes
@@ -1453,7 +1455,7 @@ Global Symbols
 <P><STRONG><a name="[9f]"></a>I2C_NAck</STRONG> (Thumb, 50 bytes, Stack size 8 bytes, bsp_eeprom.o(i.I2C_NAck))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = I2C_NAck
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Delay
 </UL>
 <BR>[Called By]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EEPROM_ReadBytes
@@ -1462,7 +1464,7 @@ Global Symbols
 <P><STRONG><a name="[9d]"></a>I2C_ReadByte</STRONG> (Thumb, 66 bytes, Stack size 16 bytes, bsp_eeprom.o(i.I2C_ReadByte))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = I2C_ReadByte
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Delay
 </UL>
@@ -1472,7 +1474,7 @@ Global Symbols
 <P><STRONG><a name="[9b]"></a>I2C_SendByte</STRONG> (Thumb, 94 bytes, Stack size 16 bytes, bsp_eeprom.o(i.I2C_SendByte))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = I2C_SendByte
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Delay
 </UL>
 <BR>[Called By]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_CheckDevice
@@ -1483,7 +1485,7 @@ Global Symbols
 <P><STRONG><a name="[9a]"></a>I2C_Start</STRONG> (Thumb, 60 bytes, Stack size 8 bytes, bsp_eeprom.o(i.I2C_Start))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = I2C_Start
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Delay
 </UL>
 <BR>[Called By]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_CheckDevice
@@ -1494,7 +1496,7 @@ Global Symbols
 <P><STRONG><a name="[99]"></a>I2C_Stop</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, bsp_eeprom.o(i.I2C_Stop))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = I2C_Stop
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Delay
 </UL>
 <BR>[Called By]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_CheckDevice
@@ -1507,7 +1509,7 @@ Global Symbols
 <P><STRONG><a name="[9c]"></a>I2C_WaitAck</STRONG> (Thumb, 66 bytes, Stack size 16 bytes, bsp_eeprom.o(i.I2C_WaitAck))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = I2C_WaitAck
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;I2C_Delay
 </UL>
@@ -1520,7 +1522,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = KEY1_StateRead &rArr; HAL_Delay
 </UL>
 <BR>[Calls]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 </UL>
 <BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -1529,7 +1531,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = KEY2_StateRead &rArr; HAL_Delay
 </UL>
 <BR>[Calls]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 </UL>
 <BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -1538,7 +1540,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = KEY3_StateRead &rArr; HAL_Delay
 </UL>
 <BR>[Calls]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 </UL>
 <BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_RxCpltCallback
@@ -1558,7 +1560,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EEPROM_ReadBytes
 <LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EEPROM_CheckOk
-<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;A1_ReadData_FUN
 <LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -1567,8 +1569,8 @@ Global Symbols
 <P><STRONG><a name="[69]"></a>LAMP_Save_BrightValue</STRONG> (Thumb, 156 bytes, Stack size 32 bytes, bsp_lamp.o(i.LAMP_Save_BrightValue))
 <BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = LAMP_Save_BrightValue &rArr; EEPROM_CheckOk &rArr; I2C_CheckDevice &rArr; I2C_InitGPIO &rArr; HAL_GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
+<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EEPROM_WriteBytes
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EEPROM_ReadBytes
 <LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EEPROM_CheckOk
@@ -1579,7 +1581,7 @@ Global Symbols
 <P><STRONG><a name="[f5]"></a>LED_GPIO_Init</STRONG> (Thumb, 146 bytes, Stack size 40 bytes, bsp_led.o(i.LED_GPIO_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = LED_GPIO_Init &rArr; HAL_GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_Init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -1612,11 +1614,11 @@ Global Symbols
 <P><STRONG><a name="[f9]"></a>Motor_Save_EndPosition</STRONG> (Thumb, 134 bytes, Stack size 24 bytes, drv8825.o(i.Motor_Save_EndPosition))
 <BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = Motor_Save_EndPosition &rArr; EEPROM_CheckOk &rArr; I2C_CheckDevice &rArr; I2C_InitGPIO &rArr; HAL_GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
+<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EEPROM_WriteBytes
 <LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EEPROM_CheckOk
-<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -1628,7 +1630,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = PC_A2_DRV8825_ReadSpeed &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
-<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;A1_ReadData_A2_Fun
 </UL>
@@ -1640,7 +1642,7 @@ Global Symbols
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Hex2oct_MD2
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Hex2oct_MD1
 <LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Hex2oct_LSB
-<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;A1_ReadData_A2_Fun
 </UL>
@@ -1651,7 +1653,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EEPROM_ReadBytes
 <LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EEPROM_CheckOk
-<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;A1_ReadData_FUN
 </UL>
@@ -1666,9 +1668,9 @@ Global Symbols
 <P><STRONG><a name="[5f]"></a>SPI_COMM_Function</STRONG> (Thumb, 118 bytes, Stack size 16 bytes, spi_comm.o(i.SPI_COMM_Function))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = SPI_COMM_Function &rArr; HAL_SPI_Transmit &rArr; SPI_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
+<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[cc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SPI_Transmit
-<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;A1_ReadData_A2_Fun
 <LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;A1_CONTROL_A2_FUN
@@ -1687,7 +1689,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;STEPMOTOR_AxisMoveRel
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DRV8825_Read_CurrentPosition
-<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;A1_FUN
 <LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -1696,7 +1698,7 @@ Global Symbols
 <P><STRONG><a name="[80]"></a>STEPMOTOR_AxisMoveRel</STRONG> (Thumb, 278 bytes, Stack size 40 bytes, bsp_stepmotor.o(i.STEPMOTOR_AxisMoveRel))
 <BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = STEPMOTOR_AxisMoveRel &rArr; DRV8825_Read_CurrentPosition &rArr; EEPROM_CheckOk &rArr; I2C_CheckDevice &rArr; I2C_InitGPIO &rArr; HAL_GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_CCxChannelCmd
 <LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_OC_Start_IT
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DRV8825_Read_CurrentPosition
@@ -1743,8 +1745,8 @@ Global Symbols
 <P><STRONG><a name="[67]"></a>Set_NewOrigin_Position</STRONG> (Thumb, 218 bytes, Stack size 24 bytes, drv8825.o(i.Set_NewOrigin_Position))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = Set_NewOrigin_Position &rArr; DRV8825_Save_CurrentPosition &rArr; EEPROM_CheckOk &rArr; I2C_CheckDevice &rArr; I2C_InitGPIO &rArr; HAL_GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
+<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EEPROM_WriteBytes
 <LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EEPROM_CheckOk
 <LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DRV8825_Save_CurrentPosition
@@ -1779,7 +1781,7 @@ Global Symbols
 <P><STRONG><a name="[25]"></a>TIM1_CC_IRQHandler</STRONG> (Thumb, 262 bytes, Stack size 24 bytes, bsp_stepmotor.o(i.TIM1_CC_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = TIM1_CC_IRQHandler &rArr; HAL_TIM_OC_Stop_IT &rArr; TIM_CCxChannelCmd
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_CCxChannelCmd
 <LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_OC_Stop_IT
 </UL>
@@ -1832,7 +1834,7 @@ Global Symbols
 
 <P><STRONG><a name="[11c]"></a>__1printf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printfa.o(i.__0printf), UNUSED)
 
-<P><STRONG><a name="[70]"></a>__2printf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printfa.o(i.__0printf))
+<P><STRONG><a name="[71]"></a>__2printf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printfa.o(i.__0printf))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = __2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;STEPMOTOR_AxisMoveAbs
@@ -1844,7 +1846,7 @@ Global Symbols
 <LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_I2C_SlaveRxCpltCallback
 <LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SPI_COMM_Function
-<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;A2_LAMP_Read_BrightValue
+<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;A2_LAMP_Read_BrightValue
 <LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PC_DRV8825_ReadSpeed
 <LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PC_A2_Pulse_EEPROM_Value
 <LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PC_A2_DRV8825_ReadSpeed
@@ -1874,9 +1876,9 @@ Global Symbols
 <P><STRONG><a name="[46]"></a>main</STRONG> (Thumb, 514 bytes, Stack size 112 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 376<LI>Call Chain = main &rArr; Dec_To_Hex &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Init
 <LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_PWM_Start
 <LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_Base_Start
@@ -1908,7 +1910,7 @@ Global Symbols
 <LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;A1_FUN
 <LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;A1_CONTROL_A2_FUN
 <LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
-<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 <LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strlen
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 </UL>
@@ -2103,7 +2105,7 @@ Local Symbols
 <P><STRONG><a name="[fb]"></a>STEPMOTOR_GPIO_Init</STRONG> (Thumb, 160 bytes, Stack size 40 bytes, bsp_stepmotor.o(i.STEPMOTOR_GPIO_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = STEPMOTOR_GPIO_Init &rArr; HAL_GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_Init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;STEPMOTOR_TIMx_Init
@@ -2179,7 +2181,7 @@ Local Symbols
 <P><STRONG><a name="[92]"></a>DS18B20_ReadBit</STRONG> (Thumb, 56 bytes, Stack size 8 bytes, bsp_ds18b20.o(i.DS18B20_ReadBit))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = DS18B20_ReadBit &rArr; DS18B20_Mode_Out_PP &rArr; HAL_GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
 <LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS18B20_Mode_Out_PP
 <LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS18B20_Mode_IPU
@@ -2200,7 +2202,7 @@ Local Symbols
 <P><STRONG><a name="[8d]"></a>DS18B20_Rst</STRONG> (Thumb, 46 bytes, Stack size 8 bytes, bsp_ds18b20.o(i.DS18B20_Rst))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = DS18B20_Rst &rArr; DS18B20_Mode_Out_PP &rArr; HAL_GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS18B20_Mode_Out_PP
 <LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS18B20_Delay
 </UL>
@@ -2211,7 +2213,7 @@ Local Symbols
 <P><STRONG><a name="[88]"></a>DS18B20_WriteByte</STRONG> (Thumb, 96 bytes, Stack size 16 bytes, bsp_ds18b20.o(i.DS18B20_WriteByte))
 <BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = DS18B20_WriteByte &rArr; DS18B20_Mode_Out_PP &rArr; HAL_GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
+<BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS18B20_Mode_Out_PP
 <LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DS18B20_Delay
 </UL>
