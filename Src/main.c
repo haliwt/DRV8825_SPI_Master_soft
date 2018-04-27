@@ -125,7 +125,7 @@ int main(void)
   HAL_TIM_Base_Start(&htimx_STEPMOTOR);
 
   // __HAL_UART_ENABLE_IT(&husartx, UART_IT_IDLE);  //wt.edit 11.07
-  memcpy(txbuf,"SPI_MASTER version 7.01 2018-04-23 \n",100);
+  memcpy(txbuf,"SPI_MASTER version 7.02 2018-04-27 \n",100);
   HAL_UART_Transmit(&husartx,txbuf,strlen((char *)txbuf),1000);
   Brightness=LAMP_Read_BrightValue(); 
   GENERAL_TIMx_Init();
@@ -196,13 +196,18 @@ int main(void)
 			}
 		}
 		
-		if((HAL_GPIO_ReadPin(GPIO_PB8,GPIO_PB8_PIN)==0)||(KEY3_StateRead()==KEY_DOWN)||MOTOR_STOP_FLAG==1)
+		if((HAL_GPIO_ReadPin(GPIO_PB8,GPIO_PB8_PIN)==0))
 		{ 
-		    PB8_flag=1;
-			MOTOR_STOP_FLAG=0;
+		   
 			DRV8825_StopMove();
-			//printf("key stopmove is ok\n");
+			HAL_Delay(50);
 		 }
+		if((KEY3_StateRead()==KEY_DOWN)||MOTOR_STOP_FLAG==1)
+		{
+			MOTOR_STOP_FLAG=0;
+		    DRV8825_StopMove();
+			HAL_Delay(50);
+		}
 		if(re_intrrupt_flag==1) 
 		{
             re_intrrupt_flag=0;

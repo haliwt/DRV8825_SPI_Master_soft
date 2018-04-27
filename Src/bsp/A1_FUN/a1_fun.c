@@ -373,12 +373,13 @@ void A1_ReadData_A2_Fun(void)
            {
             
 			case 0x2103 :   //读取马达A2,实时位置数据
+				  HAL_Delay(200);
 				  SPI_aTxBuffer[1]=0x01;
 			      spi_order=0x03;
 			      SPI_COMM_Function(spi_order,repcdata[0],repcdata[1],repcdata[2]);
 			      HAL_Delay(100);
 				   A2_Pulse_RealTime_Value();
-			       HAL_Delay(200);
+			       HAL_Delay(100);
 			       __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23	
 				break;
 			
