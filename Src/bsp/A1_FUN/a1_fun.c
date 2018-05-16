@@ -377,9 +377,9 @@ void A1_ReadData_A2_Fun(void)
 				  SPI_aTxBuffer[1]=0x01;
 			      spi_order=0x03;
 			      SPI_COMM_Function(spi_order,repcdata[0],repcdata[1],repcdata[2]);
-			      HAL_Delay(100);
+			      HAL_Delay(300);
 				   A2_Pulse_RealTime_Value();
-			       HAL_Delay(100);
+			       HAL_Delay(30);
 			       __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23	
 				break;
 			

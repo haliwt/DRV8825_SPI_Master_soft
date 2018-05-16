@@ -131,7 +131,7 @@ int main(void)
   HAL_TIM_Base_Start(&htimx_STEPMOTOR);
 
   // __HAL_UART_ENABLE_IT(&husartx, UART_IT_IDLE);  //wt.edit 11.07
-  memcpy(txbuf,"SPI_MASTER version 7.02 2018-04-27 \n",100);
+  memcpy(txbuf,"SPI_MASTER version 9.02 2018-05-17 \n",100);
   HAL_UART_Transmit(&husartx,txbuf,strlen((char *)txbuf),1000);
   Brightness=LAMP_Read_BrightValue(); 
  // GENERAL_TIMx_Init();
