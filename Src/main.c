@@ -50,8 +50,11 @@ extern __IO uint8_t END_STOP_FLAG;  //¬Ì¥Ô‘À––µΩ÷’µ„£¨Õ£÷π±Í÷æŒ
 __IO uint8_t A1_CONTROL_A2_FLAG=0;  //A1 ÊéßÂà∂A2 Ê†áÂøó‰Ωç
 __IO uint8_t A1_Read_FLAG=0; //A1 ËØªÂèñÂèÇÊï∞ÂÄº
 __IO uint8_t A1_Read_Temp=0;
-//uint8_t DS18B20ID[8];
+__IO uint8_t MOTOR_STOP_FLAG=0;  //ËæìÂÖ•È©¨ËææÂÅúÊ≠¢Êåá‰ª§ÔºåÊ†áÂøó‰Ωç
+__IO uint8_t A1_ReadData_A2_Flag=0; //ËØªÂèñÁ¨¨‰∫å‰∏™È©¨ËææÊï∞ÊçÆ
 
+__IO uint16_t A1_Read_A2_Judge; //È©¨Ëææ1ËØªÂèñÈ©¨Ëææ2 Âà§ËØªÂÄºÊåá‰ª§
+extern __IO uint8_t  END_A1_READ_A2_RealTime_FLAG; //È©¨Ëææ1 ËØªÂèñÈ©¨Ëææ2 ÂÅúÊ≠¢Ê†áÂøó‰Ωç
 
 /* ¿©’π±‰¡ø ------------------------------------------------------------------*/
 /* ÀΩ”–∫Ø ˝‘≠–Œ --------------------------------------------------------------*/
@@ -122,7 +125,7 @@ int main(void)
   HAL_TIM_Base_Start(&htimx_STEPMOTOR);
 
   // __HAL_UART_ENABLE_IT(&husartx, UART_IT_IDLE);  //wt.edit 11.07
-  memcpy(txbuf,"SPI_MASTER version 6.06 2018-04-13 \n",100);
+  memcpy(txbuf,"SPI_MASTER version 7.02 2018-04-27 \n",100);
   HAL_UART_Transmit(&husartx,txbuf,strlen((char *)txbuf),1000);
   Brightness=LAMP_Read_BrightValue(); 
   GENERAL_TIMx_Init();
@@ -193,12 +196,18 @@ int main(void)
 			}
 		}
 		
-		if((HAL_GPIO_ReadPin(GPIO_PB8,GPIO_PB8_PIN)==0)||(KEY3_StateRead()==KEY_DOWN))
+		if((HAL_GPIO_ReadPin(GPIO_PB8,GPIO_PB8_PIN)==0))
 		{ 
-		    PB8_flag=1;
+		   
 			DRV8825_StopMove();
-			//printf("key stopmove is ok\n");
+			HAL_Delay(50);
 		 }
+		if((KEY3_StateRead()==KEY_DOWN)||MOTOR_STOP_FLAG==1)
+		{
+			MOTOR_STOP_FLAG=0;
+		    DRV8825_StopMove();
+			HAL_Delay(50);
+		}
 		if(re_intrrupt_flag==1) 
 		{
             re_intrrupt_flag=0;
@@ -212,11 +221,13 @@ int main(void)
 		if(A1_CONTROL_A2_FLAG==1)
 		{
             A1_CONTROL_A2_FLAG=0;
+			
 			A1_CONTROL_A2_FUN();
 		}
 		if( END_STOP_FLAG==1)  //È©¨ËææÂÅúÊ≠¢Ê†áÂøó‰Ωç
 		{
 		   END_STOP_FLAG=0;
+		   END_A1_READ_A2_RealTime_FLAG=1;
 		   Motor_Save_EndPosition();
         }
 		if(A1_Read_Temp==1)
@@ -228,6 +239,12 @@ int main(void)
 		  Dec_To_Hex(temperature);
 		  LED1_ON;
           HAL_Delay(1000);
+		}
+		if(A1_ReadData_A2_Flag==1)
+        {
+            A1_ReadData_A2_Flag=0;
+			A1_ReadData_A2_Fun();
+
 		}
 		
 	}
@@ -355,13 +372,7 @@ if(HAL_UART_Receive_IT(&husartx,aRxBuffer,7)==HAL_OK )
 						case 0x00 :
 							if(aRxBuffer[6]==0x0b)
 								{
-									DRV8825_StopMove();
-									LED2_OFF;
-									LED1_OFF;
-									HAL_Delay(10);
-									LED1_ON;
-									LED2_ON;
-							
+                                    MOTOR_STOP_FLAG=1;
 									__HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
 								}
 							break;
@@ -445,7 +456,7 @@ if(HAL_UART_Receive_IT(&husartx,aRxBuffer,7)==HAL_OK )
 	    }
   }// end if(aRxBuffer[0]==0xa1)
 
-  /*****************ÊéßÂà∂Á¨¨‰∫å‰∏™È©¨ËææÊåá‰ª§******************************/
+  /*****************øÿ÷∆¬Ì¥ÔA2******************************/
    if(aRxBuffer[0]==0xA2)
    {
     if(aRxBuffer[1]==0x00)
@@ -566,7 +577,7 @@ if(HAL_UART_Receive_IT(&husartx,aRxBuffer,7)==HAL_OK )
 						
 			    }
 			} //end if(aRxBuffer[1]==0x00)
-		   /*****************************∂¡»°µ⁄∂˛¬Ì¥Ô÷∏¡Ó**********************************/
+		   /*****************************∂¡»°µ⁄∂˛∏ˆ¬Ì¥ÔA2 ˝æ›*******************************/
 		   if(aRxBuffer[1]==0x01)   
 		   {
 		     switch(aRxBuffer[2])
@@ -574,9 +585,9 @@ if(HAL_UART_Receive_IT(&husartx,aRxBuffer,7)==HAL_OK )
 				 case 0x03:   //∂¡»°¬Ì¥Ô µ ±Œª÷√¬ˆ≥Â ˝
 				    if(aRxBuffer[6]==0x0b)
 						{
-						    A1_CONTROL_A2_FLAG=1;
-						   judge_data= 0x2103;
-						  //Display_CurrentPosition();
+						    HAL_Delay(100);
+							A1_ReadData_A2_Flag=1;
+						    A1_Read_A2_Judge= 0x2103;
 							__HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
 						}
 				  break; 
@@ -585,8 +596,8 @@ if(HAL_UART_Receive_IT(&husartx,aRxBuffer,7)==HAL_OK )
 						if(aRxBuffer[6]==0x0b)
 						{
 
-							 A1_CONTROL_A2_FLAG=1;
-						   judge_data= 0x2104;
+							   A1_ReadData_A2_Flag=1;
+						   A1_Read_A2_Judge= 0x2104;
 							__HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
 						}
 					 }
@@ -595,8 +606,8 @@ if(HAL_UART_Receive_IT(&husartx,aRxBuffer,7)==HAL_OK )
 					 {
 						if(aRxBuffer[6]==0x0b)
 						{
-                           A1_CONTROL_A2_FLAG=1;
-						   judge_data= 0x2101;
+                           A1_ReadData_A2_Flag=1;
+						   A1_Read_A2_Judge= 0x2101;
 							__HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
 						}
 					 }
@@ -606,8 +617,8 @@ if(HAL_UART_Receive_IT(&husartx,aRxBuffer,7)==HAL_OK )
 						if(aRxBuffer[6]==0x0b)
 						{
 							
-						    A1_CONTROL_A2_FLAG=1;
-						   judge_data= 0x2102;
+						    A1_ReadData_A2_Flag=1;
+						   A1_Read_A2_Judge= 0x2102;
 						  
 							__HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
 						}
@@ -617,8 +628,8 @@ if(HAL_UART_Receive_IT(&husartx,aRxBuffer,7)==HAL_OK )
 						 if(aRxBuffer[6]==0x0b)
 						{
 							
-						    A1_CONTROL_A2_FLAG=1;
-						   judge_data= 0x21e0;
+						     A1_ReadData_A2_Flag=1;
+						   A1_Read_A2_Judge= 0x21e0;
 						  
 							__HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23
 						}
@@ -645,9 +656,7 @@ void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi)
 {
   
    SPI_TX_FLAG=1;
-    //__HAL_SPI_DISABLE(&hspi_SPI);
-
-  //HAL_SPI_Receive_IT(&hspi_SPI,&aRxBuffer[i],7);
+   
   #if 0
   HAL_SPI_Transmit(&hspi_SPI,&SPI_aTxBuffer[0],7,0XFFFF);
   {
@@ -668,6 +677,7 @@ void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi)
   #endif
   
   HAL_SPI_Transmit_IT(&hspi_SPI,&SPI_aTxBuffer[0],7);
+  
 	
 }
 #endif
@@ -682,23 +692,29 @@ void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi)
 void HAL_I2C_SlaveRxCpltCallback(I2C_HandleTypeDef *hi2c)
 {
          I2C_RX_SAVE_Buffer[j]=i2c_rx_data;
+        
 		 if(j==0)
 		 {
-		     j++;
-			 printf("rxcpltcall[0]£∫%#x\n",i2c_rx_data);
+		   j++;
+           I2C_RX_SAVE_Buffer[0]=i2c_rx_data;
+           printf("rxcpltcall[0]£∫%#x\n",I2C_RX_SAVE_Buffer[0]);
+           
 		 }
 		 else if(j==1)
 		 {
              j++;
-			 printf("rxcpltcall[1]£∫%#x\n",i2c_rx_data);
+             I2C_RX_SAVE_Buffer[1]=i2c_rx_data;
+			 printf("rxcpltcall[1]£∫%#x\n",I2C_RX_SAVE_Buffer[1]);
 			 
 		 }
 		 else if(j==2)
 		 {
 		   j=0;
-		   printf("rxcpltcall[2]£∫%#x\n",i2c_rx_data);
+           I2C_RX_SAVE_Buffer[2]=i2c_rx_data;
+		   printf("rxcpltcall[2]£∫%#x\n",I2C_RX_SAVE_Buffer[2]);
 		 }
+      
 		 HAL_I2C_Slave_Receive_IT(&I2cHandle,&i2c_rx_data,4);
-	
+	 
 }
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

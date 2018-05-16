@@ -172,141 +172,6 @@ void DRV8825_StopMove(void)
        Display_EEPROM_Value();
 
 }
-/************************************
-*
-*函数?  : Read_Origin_Position()?
-*功能：读取原点的位置
-*参数：无
-*返回值：原点的位置坐标。
-*
-************************************/
-uint16_t Read_Origin_Position(void)
-{
-     uint8_t flag;
-	   uint16_t origin_pos;
-	   flag=EEPROM_CheckOk();
-	   if(flag==1)
-		 {
-	 //将EEPROM读出数据顺序保持到I2c_Buf_Read中  
-   	 EEPROM_ReadBytes(I2c_Buf_Read, 0, 2); 
-		 HAL_Delay(200);
-     origin_pos=I2c_Buf_Read[0]<<8|I2c_Buf_Read[1];
-		 return origin_pos;
-    
-	  }
-		else return 0;
-		
-}
-
-/******************************************************
-*
-*底层计算函数
-* DRV8825_Pulse_AxisMvoeRel(int32_t pulse ,int32_t speed)
-*函数功能：以脉冲模式驱动,相对位移
-*    相对位置，转动一圈 ：200x32=6400个脉冲。
-*参数：pulse , 脉冲数。speed 速度。
-*返回值：无
-*
-*******************************************************/
-void DRV8825_Back_AxisMoveRel(int32_t backstep, uint32_t backspeed)
-{
-   uint32_t tim_count;//获取定时器的计数值
-   uint16_t i=10000;
-  if(backstep < 0)      // 步数为负数
-  {
-	      
-		srd.dir = CCW; // 逆时针方向旋转,退步，向马达方向移动！--向后走，退步。
-	    STEPMOTOR_DIR_REVERSAL();
-		//LimNega=step; //wt.edit 2018.01.16
-		#if 1//解决 buf 解回原点的，位置错误
-		if((stop_flag==1) && (NewOrigin_flag==0))  //按stop键，执行此语句
-		{
-		  stop_flag=10;  //执行定时器中断函数
-		 // back_flag=0;
-		  backstep =-backstep; 
-		  LimNega=backstep;
-		 // temp_value=-step+DRV8825_Read_CurrentPosition();
-		  step_position=DRV8825_Read_CurrentPosition();
-		 // step_count=temp_value;
-		  srd.rel_step  =backstep;
-		  //PulseNumbers=DRV8825_Read_CurrentPosition();
-		 // PulseNumbers= backstep- DRV8825_Read_CurrentPosition(); //wt.edit 18.03.11
-		    PulseNumbers=step_position;
-		}
-		
-		else 
-		#endif	
-		{
-	    backstep =-backstep;   // 获取步数绝对值
-		step_position=backstep;//wt.edit 2018.03.11
-		LimNega=backstep; //wt.edit 2018.01.16
-		
-		}
-		
-  }
-  else
-  {     
-	    srd.dir = CW;  // 顺时针方向旋转---向前走，背离马达方向移动。
-	    STEPMOTOR_DIR_FORWARD();
-		LimPosi=backstep; 
-		#if 1            //stop 按键停顿
-		if((stop_flag==1) && (NewOrigin_flag==0)) 
-		{
-			stop_flag=10;
-			LimPosi=backstep;
-			//temp_value=step-DRV8825_Read_CurrentPosition();
-			//step_position=DRV8825_Read_CurrentPosition();
-			PulseNumbers=DRV8825_Read_CurrentPosition();
-			
-			srd.rel_step  = backstep;
-			//Display_EEPROM_Value();
-		}
-		else
-		#endif 
-	    {
-			LimPosi=backstep;    //wt.edit 2018.01.16 
-			srd.rel_step  = backstep;
-		}
-    	
-  }
-	
- // srd.rel_step  = step;	//记录相对运动的步数
-  
-
-  if(backstep != 0)    // 如果目标运动步数不为0
-  {
-    
-    
-    #if 1	
-			
-	do
-		{
-           // Toggle_Pulse=1200;
-			srd.min_delay=1200;
-		    srd.run_state = RUN;
-
-			tim_count=__HAL_TIM_GET_COUNTER(&htimx_STEPMOTOR);
-			//比较值，CCRx=tim_count+srd.min_delay
-		     __HAL_TIM_SET_COMPARE(&htimx_STEPMOTOR,STEPMOTOR_TIM_CHANNEL_x,tim_count+srd.min_delay); // 设置定时器比较值
-			HAL_TIM_OC_Start_IT(&htimx_STEPMOTOR,STEPMOTOR_TIM_CHANNEL_x);
-			TIM_CCxChannelCmd(STEPMOTOR_TIMx, STEPMOTOR_TIM_CHANNEL_x, TIM_CCx_ENABLE);// 使能定时器通道 
-		    DRV8825_OUTPUT_ENABLE();
-    	}
-	while(i--);
-	#endif
-	Toggle_Pulse=DRV8825_ReadSpeed();
-	srd.min_delay=Toggle_Pulse;
-    srd.run_state = RUN;
-	
-  }
-  tim_count=__HAL_TIM_GET_COUNTER(&htimx_STEPMOTOR);
-	//比较值，CCRx=tim_count+srd.min_delay
-  __HAL_TIM_SET_COMPARE(&htimx_STEPMOTOR,STEPMOTOR_TIM_CHANNEL_x,tim_count+srd.min_delay); // 设置定时器比较值
-	HAL_TIM_OC_Start_IT(&htimx_STEPMOTOR,STEPMOTOR_TIM_CHANNEL_x);
-	TIM_CCxChannelCmd(STEPMOTOR_TIMx, STEPMOTOR_TIM_CHANNEL_x, TIM_CCx_ENABLE);// 使能定时器通道 
-  DRV8825_OUTPUT_ENABLE();
-
-}
 
 /****************************************************************
 *
@@ -319,11 +184,8 @@ void DRV8825_Save_CurrentPosition(void)
 {
      uint8_t flag,flag_w,i;
      uint32_t a,b,c,d;
-    // a=PulseNumbers & 0xff;        //最高位
-    // b=PulseNumbers >>8 & 0xff;   //第二位
-    // c=PulseNumbers >>16 & 0xff;  //第三位
-    // d=PulseNumbers >>24 & 0xff;  //第四位,最低位
-	   a=step_count & 0xff;        //最高位
+
+	 a=step_count & 0xff;        //最高位
      b=step_count >>8 & 0xff;   //第二位
      c=step_count >>16 & 0xff;  //第三位
      d=step_count >>24 & 0xff;  //第四位,最低位

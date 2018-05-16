@@ -29,6 +29,7 @@ __IO uint8_t save_flag;
 extern __IO uint8_t NewOrigin_flag;
 extern __IO uint8_t PB8_flag;
 __IO uint8_t END_STOP_FLAG=0; //运行终点标志位
+__IO uint8_t END_A1_READ_A2_RealTime_FLAG=0; //马达1 读取马达2 实时数据停止标志位
 
 /* 扩展变量 ------------------------------------------------------------------*/
 /* 私有函数原形 --------------------------------------------------------------*/
@@ -262,15 +263,17 @@ void STEPMOTOR_AxisMoveRel( int32_t step, uint32_t speed)
  **********************************************************************/
 void STEPMOTOR_AxisMoveAbs( int32_t targert_step, uint32_t speed)
 {
-	 int32_t rel_step = 0;
+	int32_t rel_step = 0;
 	 int8_t dir = -1;
-	// rel_step = step_position - targert_step ; 	//获取当前位置和目标位置之间的步数值
-    rel_step = step_count - targert_step ;   //wt.edit 2018.04.13
-	if(stop_flag==0)
+	//rel_step = step_position - targert_step ; 	//获取当前位置和目标位置之间的步数值
+	rel_step = step_count - targert_step ; 	//wt.edit 2018.04.14
+	if(stop_flag==0)  //wt.edit 2018.04.03
 	{
 	  stop_flag=21;
-	  rel_step=DRV8825_Read_CurrentPosition();   //负数--远离马达方向移动
+	  rel_step=DRV8825_Read_CurrentPosition();   //负数--远离马达方向移动,-DR
+	  printf("power on first run 0xb0 \n");
 	}
+	
 	else if(rel_step == 0)	
 	{
 		dir = 0;
@@ -283,37 +286,9 @@ void STEPMOTOR_AxisMoveAbs( int32_t targert_step, uint32_t speed)
 		step_position=0;
 		PulseNumbers=0;
 	}
-	else
-		dir = -1;
-	//STEPMOTOR_AxisMoveRel(dir*rel_step,speed); 
-	DRV8825_Back_AxisMoveRel(dir*rel_step,speed);  //wt.edit 2018.03.11
-}
-
-
-/**************************************************
-  * 函数功能: 轴回原点函数
-  * 输入参数: 原点位置，
-  * 返 回 值: 无
-  * 说    明: 以逆时针方向为回原点方向一直旋转,检测到
-  *           逆时针方向上的极限后停止,记录当前位置,
-  *           作为原点
-**************************************************/
-
-void STEPMOTOR_AxisHome(uint16_t speed)
-{
-	 int32_t rel_step = 0;
-	 int8_t dir = -1;
-	 home_position = Read_Origin_Position();
-     rel_step = step_position - home_position ; 	//获取当前位置和目标位置之间的步数值
-	
-	if(rel_step == 0)	
-	{
-		dir = 0;
-		PulseNumbers=0;  //wt.18.03.06
-		step_position=0; ////wt.18.03.06
-	}
 	else dir = -1;
 	STEPMOTOR_AxisMoveRel(dir*rel_step,speed);
+	
 }
 
 /******************************************************************************
@@ -337,7 +312,7 @@ void STEPMOTOR_PC_AxisMoveAbs( uint8_t abs_high,uint8_t abs_mid,uint8_t abs_low,
 	 temp3=Hex2oct_LSB(abs_low);
 		
 	 ABS_Distance=temp1+temp2+temp3;
-	#if 1
+	
 	if(stop_flag==0)    //第一次开机，执行此语句
 	{
 	  
@@ -353,7 +328,7 @@ void STEPMOTOR_PC_AxisMoveAbs( uint8_t abs_high,uint8_t abs_mid,uint8_t abs_low,
 	}
 	else if(NewOrigin_flag==1)
 	{
-	  NewOrigin_flag=0;
+	    NewOrigin_flag=0;
 		step_position=0;
 		PulseNumbers=0;
 		step_count=0;
@@ -361,9 +336,8 @@ void STEPMOTOR_PC_AxisMoveAbs( uint8_t abs_high,uint8_t abs_mid,uint8_t abs_low,
 	}
 	//home_position = Read_Origin_Position();    //wt.edit 2018.01.16
     //rel_step=home_position-targert_step;
-	#endif
-	else
-   rel_step=step_position-ABS_Distance;	//wt.edit 2018.01.16
+   else
+   rel_step= step_count-ABS_Distance;	//wt.edit 2018.04.13
 	if(rel_step == 0)	
 	{
 		dir = 0;
@@ -376,17 +350,14 @@ void STEPMOTOR_PC_AxisMoveAbs( uint8_t abs_high,uint8_t abs_mid,uint8_t abs_low,
     
 }
 
-
-/**************************************************************************************/
-
-/**
+/*******************************************************************
   * 函数功能: 定时器中断服务函数
   * 输入参数: 无
   * 返 回 值: 无
   * 说    明: 实现加减速过程 
   * TIM1_CC_IRQHandler
   *
-***************************************************/
+********************************************************************/
 void STEPMOTOR_TIMx_IRQHandler(void)//定时器中断处理
 { 
    uint32_t tim_count=0;
@@ -453,6 +424,7 @@ void STEPMOTOR_TIMx_IRQHandler(void)//定时器中断处理
           __HAL_TIM_CLEAR_FLAG(&htimx_STEPMOTOR, STEPMOTOR_TIM_FLAG_CCx);
           DRV8825_OUTPUT_DISABLE(); 
 		   END_STOP_FLAG=1;
+		   //wt.edit 2018.04.17
 		if(stop_flag==21)
 		{
 			stop_flag=100;

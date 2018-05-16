@@ -198,6 +198,7 @@ void Dec_To_Hex(float decnum)
    *
    *
 ********************************************/
+#if 0
 uint8_t Dec_Hex_Fun(uint8_t hexdata)
 {
     uint8_t num=0;
@@ -212,7 +213,7 @@ uint8_t Dec_Hex_Fun(uint8_t hexdata)
     num=num/16;
 
     }
-    printf("??????????:0x");
+    printf("This is hex numbers:0x");
     for(i=i-1;i>=0;i--)//????
     {
      m=a[i];
@@ -221,4 +222,4 @@ uint8_t Dec_Hex_Fun(uint8_t hexdata)
     }
     printf("\n");		
 }
-
+#endif
