@@ -29,7 +29,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* htim)
     
 	 
     /* 定时器通道1功能引脚IO初始化 */
-    GPIO_InitStruct.Pin = GENERAL_TIM_CH4_PIN ;//GENERAL_TIM_CH1_PIN;
+    GPIO_InitStruct.Pin = GENERAL_TIM_CH1_PIN;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
     HAL_GPIO_Init(GENERAL_TIM_CH1_PORT, &GPIO_InitStruct);
@@ -69,7 +69,7 @@ void GENERAL_TIMx_Init(void)
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
   HAL_TIM_PWM_ConfigChannel(&htimx, &sConfigOC, TIM_CHANNEL_1);
-  HAL_TIM_PWM_ConfigChannel(&htimx, &sConfigOC, TIM_CHANNEL_4);
+ // HAL_TIM_PWM_ConfigChannel(&htimx, &sConfigOC, TIM_CHANNEL_4);
 
   //sConfigOC.Pulse = GENERAL_TIM_CH2_PULSE;
   //HAL_TIM_PWM_ConfigChannel(&htimx, &sConfigOC, TIM_CHANNEL_2);

@@ -19,6 +19,7 @@
 #include "i2c_slave/bsp_I2C.h"
 #include "hextodec/hextodec.h"
 #include "a1_fun/a1_fun.h"
+#include "CAN/bsp_CAN.h"
 
 #define SENDBUFF_SIZE             100 // ´®¿ÚDMA·¢ËÍ»º³åÇø´óĞ¡
 #define STEPMOTOR_MICRO_STEP      32  // ²½½øµç»úÇı¶¯Æ÷Ï¸·Ö£¬±ØĞëÓëÇı¶¯Æ÷Êµ¼ÊÉèÖÃ¶ÔÓ¦
@@ -55,6 +56,8 @@ __IO uint8_t A1_ReadData_A2_Flag=0; //è¯»å–ç¬¬äºŒä¸ªé©¬è¾¾æ•°æ®
 
 __IO uint16_t A1_Read_A2_Judge; //é©¬è¾¾1è¯»å–é©¬è¾¾2 åˆ¤è¯»å€¼æŒ‡ä»¤
 extern __IO uint8_t  END_A1_READ_A2_RealTime_FLAG; //é©¬è¾¾1 è¯»å–é©¬è¾¾2 åœæ­¢æ ‡å¿—ä½
+uint8_t CAN_TX_BUF[4]={0X00,0X00,0X00,0X00};
+uint8_t CAN_RX_BUF[4];
 
 /* À©Õ¹±äÁ¿ ------------------------------------------------------------------*/
 /* Ë½ÓĞº¯ÊıÔ­ĞÎ --------------------------------------------------------------*/
@@ -116,11 +119,14 @@ int main(void)
   LED_GPIO_Init();
   KEY_GPIO_Init();
   GENERAL_TIMx_Init();
-	
   MX_USARTx_Init();
+	
+  CAN1_Mode_Init(CAN_SJW_1TQ,CAN_BS1_5TQ,CAN_BS2_2TQ,36,CAN_MODE_NORMAL ); //CAN³õÊ¼»¯,²¨ÌØÂÊ125Kbps
   STEPMOTOR_TIMx_Init();
   MX_I2C_EEPROM_Init();
   /* È·¶¨¶¨Ê±Æ÷ */
+
+	
   SPIx_Init();
   HAL_TIM_Base_Start(&htimx_STEPMOTOR);
 
@@ -128,15 +134,15 @@ int main(void)
   memcpy(txbuf,"SPI_MASTER version 7.02 2018-04-27 \n",100);
   HAL_UART_Transmit(&husartx,txbuf,strlen((char *)txbuf),1000);
   Brightness=LAMP_Read_BrightValue(); 
-  GENERAL_TIMx_Init();
-  HAL_TIM_PWM_Start(&htimx,TIM_CHANNEL_4); 
+ // GENERAL_TIMx_Init();
+ // HAL_TIM_PWM_Start(&htimx,TIM_CHANNEL_1); 
   /* Ê¹ÄÜ½ÓÊÕ£¬½øÈëÖĞ¶Ï»Øµ÷º¯Êı */
   HAL_UART_Receive_IT(&husartx,aRxBuffer,7);
   HAL_TIM_PWM_Start(&htimx,TIM_CHANNEL_1);//HAL_TIM_PWM_Start(&htimx,TIM_CHANNEL_1);
    /* Ê¹ÄÜ½ÓÊÕ£¬½øÈëÖĞ¶Ï»Øµ÷º¯Êı */
   //Brightness=LAMP_Read_BrightValue(); 
   GENERAL_TIMx_Init();
-  HAL_TIM_PWM_Start(&htimx,TIM_CHANNEL_4);  
+  HAL_TIM_PWM_Start(&htimx,TIM_CHANNEL_1); 
   printf("DS18B20ÎÂ¶È´«¸ĞÆ÷ĞÅÏ¢¶ÁÈ¡\n");
   while(DS18B20_Init())	
   {

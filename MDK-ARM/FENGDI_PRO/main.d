@@ -74,3 +74,4 @@
 .\fengdi_pro\main.o: ..\Inc\bsp\i2c_slave/bsp_I2C.h
 .\fengdi_pro\main.o: ..\Inc\bsp\hextodec/hextodec.h
 .\fengdi_pro\main.o: ..\Inc\bsp\a1_fun/a1_fun.h
+.\fengdi_pro\main.o: ..\Inc\bsp\CAN/bsp_CAN.h

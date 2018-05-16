@@ -12,8 +12,8 @@
 
 #define I2C_GPIO_CLK_ENABLE()               __HAL_RCC_GPIOB_CLK_ENABLE()
 #define I2C_GPIO_PORT                       GPIOB   
-#define I2C_SCL_AT24C02_PIN                 GPIO_PIN_5//6
-#define I2C_SDA_AT24C02_PIN                 GPIO_PIN_4//7
+#define I2C_SCL_AT24C02_PIN                 GPIO_PIN_4//6  wt.edit 2018.05.16
+#define I2C_SDA_AT24C02_PIN                 GPIO_PIN_5//7
 
 #define I2C_SCL_HIGH()                      HAL_GPIO_WritePin(I2C_GPIO_PORT,I2C_SCL_AT24C02_PIN,GPIO_PIN_SET)    // 输出高电平
 #define I2C_SCL_LOW()                       HAL_GPIO_WritePin(I2C_GPIO_PORT,I2C_SCL_AT24C02_PIN,GPIO_PIN_RESET)  // 输出低电平

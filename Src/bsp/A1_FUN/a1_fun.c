@@ -143,7 +143,7 @@ void A1_FUN(void)
 				   Brightness=aRxBuffer[5];
 				   LAMP_Save_BrightValue(Brightness);
 				   GENERAL_TIMx_Init();
-				   HAL_TIM_PWM_Start(&htimx,TIM_CHANNEL_4);
+				   HAL_TIM_PWM_Start(&htimx,TIM_CHANNEL_1);//wt.edit 2018.05.16
 				
 					LED2_ON;
 					LED1_OFF;
