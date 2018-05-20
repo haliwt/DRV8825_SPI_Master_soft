@@ -299,6 +299,7 @@ void I2C1_EV_IRQHandler(void)
 /**
 * @brief This function handles I2C1 error interrupt.
 */
+#if 0
 void I2C1_ER_IRQHandler(void)
 {
   /* USER CODE BEGIN I2C1_ER_IRQn 0 */
@@ -309,7 +310,7 @@ void I2C1_ER_IRQHandler(void)
 
   /* USER CODE END I2C1_ER_IRQn 1 */
 }
-
+#endif
 /* USER CODE END 1 */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

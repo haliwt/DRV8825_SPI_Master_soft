@@ -171,6 +171,8 @@ int main(void)
   {
 		
 	     DRV8825_SLEEP_DISABLE() ; //高电平开始工作
+	     A2_Data_Save_To_EEPROM();
+	     A1_Read_A2_Data_EEPROM();
 	     if(power_on==0)
 		 {
 		      SPI_TX_FLAG=0;
@@ -192,11 +194,6 @@ int main(void)
 			 
 			 }
 		 
-		 }
-	     if(power_on==1)
-		 {
-			 A2_Data_Save_To_EEPROM();
-			 A1_Read_A2_Data_EEPROM();
 		 }
          if(KEY1_StateRead()==KEY_DOWN)
 		 {
@@ -723,6 +720,7 @@ void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi)
 *返回值：无
 *
 ****************************************************************/
+#if 1
 void HAL_I2C_SlaveRxCpltCallback(I2C_HandleTypeDef *hi2c)
 {
          I2C_RX_SAVE_Buffer[j]=i2c_rx_data;
@@ -731,24 +729,25 @@ void HAL_I2C_SlaveRxCpltCallback(I2C_HandleTypeDef *hi2c)
 		 {
 		   j++;
            I2C_RX_SAVE_Buffer[0]=i2c_rx_data;
-           printf("rxcpltcall[0]：%#x\n",I2C_RX_SAVE_Buffer[0]);
+          // printf("rxcpltcall[0]：%#x\n",I2C_RX_SAVE_Buffer[0]);
            
 		 }
 		 else if(j==1)
 		 {
              j++;
              I2C_RX_SAVE_Buffer[1]=i2c_rx_data;
-			 printf("rxcpltcall[1]：%#x\n",I2C_RX_SAVE_Buffer[1]);
+			// printf("rxcpltcall[1]：%#x\n",I2C_RX_SAVE_Buffer[1]);
 			 
 		 }
 		 else if(j==2)
 		 {
 		   j=0;
            I2C_RX_SAVE_Buffer[2]=i2c_rx_data;
-		   printf("rxcpltcall[2]：%#x\n",I2C_RX_SAVE_Buffer[2]);
+		  // printf("rxcpltcall[2]：%#x\n",I2C_RX_SAVE_Buffer[2]);
 		 }
       
 		 HAL_I2C_Slave_Receive_IT(&I2cHandle,&i2c_rx_data,4);
 	 
 }
+#endif 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

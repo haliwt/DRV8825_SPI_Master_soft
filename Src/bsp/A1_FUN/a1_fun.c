@@ -371,15 +371,16 @@ void A1_ReadData_A2_Fun(void)
            uint8_t spi_order,temp;
            switch(A1_Read_A2_Judge)
            {
-            #if 0
+            #if 1
 			case 0x2103 :   //读取马达A2,实时位置数据
-				  HAL_Delay(200);
-				  SPI_aTxBuffer[1]=0x01;
-			      spi_order=0x03;
-			      SPI_COMM_Function(spi_order,repcdata[0],repcdata[1],repcdata[2]);
-			      HAL_Delay(300);
-				   A2_Pulse_RealTime_Value();
-			       HAL_Delay(30);
+				 // HAL_Delay(200);
+				 // SPI_aTxBuffer[1]=0x01;
+			     // spi_order=0x03;
+			      // SPI_COMM_Function(spi_order,repcdata[0],repcdata[1],repcdata[2]);
+			     //  A2_Data_Save_To_EEPROM();
+			       A1_Read_A2_Data_EEPROM();
+			       HAL_Delay(20);
+				
 			       __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23	
 				break;
 			 #endif 

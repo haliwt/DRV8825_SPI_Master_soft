@@ -445,7 +445,7 @@ void A2_Pulse_RealTime_Value(void)
 void PC_A2_Pulse_EEPROM_Value(void)
 {
        uint32_t temp2,temp3,temp4;
-	  uint8_t sendbuffer[6]={0xa2,0xe0,00,00,00,0x0b};
+	   uint8_t sendbuffer[6]={0xa2,0xe0,00,00,00,0x0b};
 	   int32_t value;
 	   
 	   sendbuffer[4]=I2C_RX_SAVE_Buffer[2];
@@ -857,9 +857,9 @@ void A2_Data_Save_To_EEPROM(void)
 	      
 	      }
 	          
-	      I2c_Buf_Write[1]=c;
-	      I2c_Buf_Write[2]=b;
-	      I2c_Buf_Write[3]=a;
+	      I2c_Buf_Write[0]=a;
+	      I2c_Buf_Write[1]=b;
+	      I2c_Buf_Write[2]=c;
 	     
       
 	     //将I2c_Buf_Write中顺序递增的数据写入EERPOM中 
@@ -927,14 +927,14 @@ void A1_Read_A2_Data_EEPROM(void)
        	  EEPROM_ReadBytes(I2c_Buf_Read, 100, 3);  //马达走的位置的数据，存储位置
 		  HAL_Delay(200);
 
-          sendbuffer[4]=I2c_Buf_Read[3];
-	      sendbuffer[3]=I2c_Buf_Read[2];
-	      sendbuffer[2]=I2c_Buf_Read[1];
+          sendbuffer[4]=I2c_Buf_Read[2];
+	      sendbuffer[3]=I2c_Buf_Read[1];
+	      sendbuffer[2]=I2c_Buf_Read[0];
 		  
 		// temp1=Hex2oct_MSB(I2c_Buf_Read[1]);  
-	     temp1=Hex2oct_MD1(I2c_Buf_Read[3]);
-	     temp2=Hex2oct_MD2(I2c_Buf_Read[2]);
-	     temp3=Hex2oct_LSB(I2c_Buf_Read[1]);
+	     temp1=Hex2oct_MD1(I2c_Buf_Read[0]);
+	     temp2=Hex2oct_MD2(I2c_Buf_Read[1]);
+	     temp3=Hex2oct_LSB(I2c_Buf_Read[2]);
 		 A2_realtime=temp1+temp2+temp3;
 		 
 		  
