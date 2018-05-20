@@ -40,6 +40,7 @@ void PC_A2_DRV8825_ReadSpeed(uint8_t s_h,uint8_t s_l) ;//读取第二马达速度值
 void PC_A2_Pulse_EEPROM_Value(void); //实时显示第二马达的位置EEPROM be saved datat，脉冲值
 void A2_Pulse_RealTime_Value(void); //实时显示第二个马达脉冲数。
 void Motor_Save_EndPosition(void);
-
+void A2_Data_Save_To_EEPROM(void);
+void A1_Read_A2_Data_EEPROM(void);
 #endif
 

@@ -111,6 +111,7 @@ int main(void)
   uint8_t txbuf[100],Mode_Count=0;
   uint8_t i, DS18B20ID[8];
   float temperature;
+  uint8_t power_on=0,temp,temp1;
 	
   /* 复位所有外设，初始化Flash接口和系统滴答定时器 */
   HAL_Init();
@@ -131,7 +132,7 @@ int main(void)
   HAL_TIM_Base_Start(&htimx_STEPMOTOR);
 
   // __HAL_UART_ENABLE_IT(&husartx, UART_IT_IDLE);  //wt.edit 11.07
-  memcpy(txbuf,"SPI_MASTER version 9.02 2018-05-17 \n",100);
+  memcpy(txbuf,"SPI_MASTER version 10.0 2018-05-20 \n",100);
   HAL_UART_Transmit(&husartx,txbuf,strlen((char *)txbuf),1000);
   Brightness=LAMP_Read_BrightValue(); 
  // GENERAL_TIMx_Init();
@@ -170,6 +171,33 @@ int main(void)
   {
 		
 	     DRV8825_SLEEP_DISABLE() ; //高电平开始工作
+	     if(power_on==0)
+		 {
+		      SPI_TX_FLAG=0;
+			  SPI_aTxBuffer[1]=0x00;
+		      temp=SPI_COMM_Function(0xee,repcdata[0],repcdata[1],repcdata[2]);
+		     if(temp)
+			 {
+			     temp1=SPI1_ReadWriteByte(0xab);
+				 if(temp1==0xab)
+					 power_on=1;
+			 }
+			 else
+			 {
+			   SPI_COMM_Function(0xee,repcdata[0],repcdata[1],repcdata[2]);
+			   HAL_Delay(500);
+			   SPI_COMM_Function(0xee,repcdata[0],repcdata[1],repcdata[2]);
+			   HAL_Delay(500);
+			    SPI_COMM_Function(0xee,repcdata[0],repcdata[1],repcdata[2]);
+			 
+			 }
+		 
+		 }
+	     if(power_on==1)
+		 {
+			 A2_Data_Save_To_EEPROM();
+			 A1_Read_A2_Data_EEPROM();
+		 }
          if(KEY1_StateRead()==KEY_DOWN)
 		 {
 		     Mode_Count++;

@@ -371,7 +371,7 @@ void A1_ReadData_A2_Fun(void)
            uint8_t spi_order,temp;
            switch(A1_Read_A2_Judge)
            {
-            
+            #if 0
 			case 0x2103 :   //读取马达A2,实时位置数据
 				  HAL_Delay(200);
 				  SPI_aTxBuffer[1]=0x01;
@@ -382,7 +382,7 @@ void A1_ReadData_A2_Fun(void)
 			       HAL_Delay(30);
 			       __HAL_UART_CLEAR_IDLEFLAG(&husartx); //edit 18.02.23	
 				break;
-			
+			 #endif 
 			case 0x2104 :   //???LED???????
 				   
 			        SPI_aTxBuffer[1]=0x01;

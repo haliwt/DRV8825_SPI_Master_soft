@@ -418,7 +418,9 @@ void A2_Pulse_RealTime_Value(void)
 	  #endif 
 	   {
 	    
-	     sendbuffer[4]=I2C_RX_SAVE_Buffer[2];
+	     
+		 
+		 sendbuffer[4]=I2C_RX_SAVE_Buffer[2];
 	     sendbuffer[3]=I2C_RX_SAVE_Buffer[1];
 	     sendbuffer[2]=I2C_RX_SAVE_Buffer[0];
 		   
@@ -825,4 +827,125 @@ void Motor_Save_EndPosition(void)
 		   	//while(1);
 	}	 
 
+}
+
+/*******************************************
+ *
+ *函数名称：
+ *函数功能：存储A2的数据，在A1 的EEPROM中。
+ *
+ *
+ *
+********************************************/
+void A2_Data_Save_To_EEPROM(void)
+{
+    uint8_t flag,flag_w,i;
+     uint32_t a,b,c;
+   
+	
+	     c=I2C_RX_SAVE_Buffer[2];  //最低位
+	     b=I2C_RX_SAVE_Buffer[1];
+	     a=I2C_RX_SAVE_Buffer[0];  //最高位
+    
+	  flag=EEPROM_CheckOk();
+	  if(flag==1)
+	  {
+	      for ( i=0; i<3; i++ ) //填充缓冲 ,
+	      {
+	      I2c_Buf_Read[i]=0;      // 清空接收缓冲区
+	      I2c_Buf_Write[i]=0;
+	      
+	      }
+	          
+	      I2c_Buf_Write[1]=c;
+	      I2c_Buf_Write[2]=b;
+	      I2c_Buf_Write[3]=a;
+	     
+      
+	     //将I2c_Buf_Write中顺序递增的数据写入EERPOM中 
+		 flag_w=EEPROM_WriteBytes(I2c_Buf_Write, 100, 3); //0x05 ~0x09
+		 HAL_Delay(200);
+		 #if 0
+		  EEPROM_ReadBytes(I2c_Buf_Read, 100, 3); 
+	   if(I2c_Buf_Read[0] == I2c_Buf_Write[0]) //
+		 {
+		    if(I2c_Buf_Read[1] == I2c_Buf_Write[1]) //
+				if(I2c_Buf_Read[2] == I2c_Buf_Write[2]) //
+				if(I2c_Buf_Read[3] == I2c_Buf_Write[3]) //
+					{
+						LED1_ON;
+						LED2_ON;
+						printf("eeprom is save OK \n");
+						//while(1);
+					}
+		 
+		 }
+		 else printf("eeprom is save error \n");
+		 #endif 
+	
+     //将EEPROM读出数据顺序保持到I2c_Buf_Read中  
+   	
+	     if(flag_w==1) //表示写入成功
+	        {
+	        LED1_ON;
+			HAL_Delay(10);
+			LED1_OFF;
+		    }
+		   else
+         printf("eeprom check error \n");				 
+		   	//while(1);
+	}	 
+
+
+
+}
+
+/**********************************************************
+ *
+ *函数名：
+ *函数功能：A1读取A2马达实时参数值，从A1的EEPROM中读取
+ *
+ *
+***********************************************************/
+void A1_Read_A2_Data_EEPROM(void)
+{
+
+       int32_t temp1,temp2,temp3;
+	   uint8_t flag,i;
+	   uint32_t  A2_realtime;
+	   uint8_t sendbuffer[6]={0xa1,0x03,00,00,00,0x0b};
+	   
+      
+         flag=EEPROM_CheckOk();
+	     if(flag==1)
+		 {
+    	  for(i=0;i<4;i++)
+		  {
+		    I2c_Buf_Read[i]=0;
+		  }
+		  /*??EEPROM??????????????I2c_Buf_Read?? */ 
+       	  EEPROM_ReadBytes(I2c_Buf_Read, 100, 3);  //马达走的位置的数据，存储位置
+		  HAL_Delay(200);
+
+          sendbuffer[4]=I2c_Buf_Read[3];
+	      sendbuffer[3]=I2c_Buf_Read[2];
+	      sendbuffer[2]=I2c_Buf_Read[1];
+		  
+		// temp1=Hex2oct_MSB(I2c_Buf_Read[1]);  
+	     temp1=Hex2oct_MD1(I2c_Buf_Read[3]);
+	     temp2=Hex2oct_MD2(I2c_Buf_Read[2]);
+	     temp3=Hex2oct_LSB(I2c_Buf_Read[1]);
+		 A2_realtime=temp1+temp2+temp3;
+		 
+		  
+      
+	     printf("A2 real position= %d \n", A2_realtime);
+         HAL_UART_Transmit(&husartx,sendbuffer,6,12);		
+       
+         }
+        
+       else 
+       {
+          printf("A1 read A2 data is ERROR !!!\n");
+       } 
 }

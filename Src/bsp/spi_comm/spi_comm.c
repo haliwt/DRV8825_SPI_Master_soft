@@ -16,7 +16,7 @@ extern __IO uint8_t re_intrrupt_flag; //从上位机，接收信号标志位，进入中断标志位
 
 uint8_t SPI_TX_flag=0;
 
-void SPI_COMM_Function(uint8_t spi_order,uint8_t spi_tx_hig,uint8_t spi_tx_mid,uint8_t spi_tx_low)
+uint8_t SPI_COMM_Function(uint8_t spi_order,uint8_t spi_tx_hig,uint8_t spi_tx_mid,uint8_t spi_tx_low)
 {
      
 	//  uint8_t i=0;
@@ -49,9 +49,11 @@ void SPI_COMM_Function(uint8_t spi_order,uint8_t spi_tx_hig,uint8_t spi_tx_mid,u
 	   printf("aTxBuffer[6]=%#x\n",SPI_aTxBuffer[6]);
 	  // SPIx_CS_DISABLE();  
 	   HAL_Delay(10);
+	   return 1;
       
 	  }
-  }
+    }
+	 else return 0;
     }
      
 	//else SPI_TX_flag=0;
